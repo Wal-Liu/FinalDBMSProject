@@ -8,10 +8,10 @@
         Title="CuaHangWindow" Height="450" Width="800">
         <Grid>
                 <ListBox x:Name="lstSP" Margin="80,64,80,159">
-                        <DataGrid Height="200" Width="632" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                        <DataGrid Height="200" Width="632" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged"/>
                 </ListBox>
-                <Button x:Name="btnNhap" Content="Nhập hàng" Margin="180,302,474,66"/>
-                <Button x:Name="btnBan" Content="Bán hàng" Margin="474,302,180,66"/>
+                <Button x:Name="btnNhap" Content="Nhập hàng" Margin="180,302,474,66" Click="btnNhap_Click"/>
+                <Button x:Name="btnBan" Content="Bán hàng" Margin="474,302,180,66" Click="btnBan_Click"/>
                 <Button x:Name="btnBack" Content="Return" HorizontalAlignment="Center" Margin="720,385,0,0" VerticalAlignment="Center" Click="btnBack_Click"/>
 
         </Grid>

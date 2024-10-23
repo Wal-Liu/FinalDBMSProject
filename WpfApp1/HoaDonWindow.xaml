@@ -1,0 +1,15 @@
+﻿<Window x:Class="WpfApp1.HoaDonWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="HoaDonWindow" Height="450" Width="800">
+    <Grid>
+        <Label Name="ProductCodeLabel" Content="Mã sản phẩm:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,38,0,0"/>
+        <Label Name="QuantityLabel" Content="Số lượng:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,72,0,0"/>
+        <Label Name ="Price" Content="Giá tiền" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,113,0,0" RenderTransformOrigin="0.63,0.081"/>
+        <Button Content="Xác nhận" HorizontalAlignment="Left" Height="30" Margin="337,203,0,0" VerticalAlignment="Top" Width="111" Click="Button_Click"/>
+    </Grid>
+</Window>

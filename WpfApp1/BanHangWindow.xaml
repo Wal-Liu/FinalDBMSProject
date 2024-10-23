@@ -1,0 +1,14 @@
+﻿<Window x:Class="WpfApp1.BanHangWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="BanHangWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="25" Margin="301,88,0,0" TextWrapping="Wrap" Text="Mã Sản Phẩm" VerticalAlignment="Top" Width="214" TextChanged="tbxMasp"/>
+        <TextBox HorizontalAlignment="Left" Height="25" Margin="301,145,0,0" TextWrapping="Wrap" Text="Số lượng" VerticalAlignment="Top" Width="214" TextChanged="tbxSoLuong"/>
+        <Button Content="Xác Nhận" HorizontalAlignment="Center" Height="22" Margin="0,194,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click" RenderTransformOrigin="-0.097,0.137"/>
+    </Grid>
+</Window>

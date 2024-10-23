@@ -29,5 +29,23 @@ namespace WpfApp1
                         main.Show();
                         this.Close();
                 }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+
         }
+
+        private void btnBan_Click(object sender, RoutedEventArgs e)
+        {
+            BanHangWindow banHangWindow = new BanHangWindow();
+            banHangWindow.Show();
+        }
+
+        private void btnNhap_Click(object sender, RoutedEventArgs e)
+        {
+            NhapHangWindow nhapHangWindow = new NhapHangWindow();
+            nhapHangWindow.Show();
+        }
+    }
 }
