@@ -30,5 +30,17 @@ namespace WpfApp1
                 main.Show();
                 this.Close();
         }
+
+                private void btnNhap_Click(object sender, RoutedEventArgs e)
+                {
+                        NhapKho nhapKho = new NhapKho();
+                        nhapKho.Show();
+                }
+
+                private void btnXuat_Click(object sender, RoutedEventArgs e)
+                {
+                        XuatKho xuatKho = new XuatKho();
+                        xuatKho.Show();
+        }
     }
 }
