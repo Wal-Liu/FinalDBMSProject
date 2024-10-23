@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BanHangWindow" Height="450" Width="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="25" Margin="301,88,0,0" TextWrapping="Wrap" Text="Mã Sản Phẩm" VerticalAlignment="Top" Width="214" TextChanged="tbxMasp"/>
+        <ComboBox x:Name="cbbSanPham" HorizontalAlignment="Left" Margin="301,82,0,0" VerticalAlignment="Top" Width="214" Height="40" FontSize="24" VerticalContentAlignment="Center" SelectionChanged="cbbSanPham_SelectionChanged"/>
         <TextBox HorizontalAlignment="Left" Height="25" Margin="301,145,0,0" TextWrapping="Wrap" Text="Số lượng" VerticalAlignment="Top" Width="214" TextChanged="tbxSoLuong"/>
         <Button Content="Xác Nhận" HorizontalAlignment="Center" Height="22" Margin="0,194,0,0" VerticalAlignment="Top" Width="62" Click="Button_Click" RenderTransformOrigin="-0.097,0.137"/>
     </Grid>

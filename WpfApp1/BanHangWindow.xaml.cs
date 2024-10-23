@@ -24,22 +24,7 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void tbxSoLuong(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void tbxMasp(object sender, TextChangedEventArgs e)
         {
 
         }
@@ -50,6 +35,11 @@ namespace WpfApp1
             hoaDonWindow.Show();
 
             this.Close();
+        }
+
+        private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

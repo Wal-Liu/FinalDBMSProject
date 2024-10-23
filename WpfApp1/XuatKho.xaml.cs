@@ -28,5 +28,10 @@ namespace WpfApp1
                 {
                         MessageBox.Show("Xuat Hang thanh cong");
         }
+
+        private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

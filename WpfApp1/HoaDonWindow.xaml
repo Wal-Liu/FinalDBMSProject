@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="HoaDonWindow" Height="450" Width="800">
     <Grid>
-        <Label Name="ProductCodeLabel" Content="Mã sản phẩm:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,38,0,0"/>
+        <Label Name="ProductName" Content="Tên sản phẩm" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,38,0,0"/>
         <Label Name="QuantityLabel" Content="Số lượng:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,72,0,0"/>
-        <Label Name ="Price" Content="Giá tiền" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,113,0,0" RenderTransformOrigin="0.63,0.081"/>
+        <Label Name ="Price" Content="Giá tiền" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,106,0,0" RenderTransformOrigin="0.63,0.081"/>
         <Button Content="Xác nhận" HorizontalAlignment="Left" Height="30" Margin="337,203,0,0" VerticalAlignment="Top" Width="111" Click="Button_Click"/>
     </Grid>
 </Window>

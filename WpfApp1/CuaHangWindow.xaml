@@ -6,13 +6,17 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="CuaHangWindow" Height="450" Width="800">
-        <Grid>
-                <ListBox x:Name="lstSP" Margin="80,64,80,159">
-                        <DataGrid Height="200" Width="632" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged"/>
-                </ListBox>
-                <Button x:Name="btnNhap" Content="Nhập hàng" Margin="180,302,474,66" Click="btnNhap_Click"/>
-                <Button x:Name="btnBan" Content="Bán hàng" Margin="474,302,180,66" Click="btnBan_Click"/>
-                <Button x:Name="btnBack" Content="Return" HorizontalAlignment="Center" Margin="720,385,0,0" VerticalAlignment="Center" Click="btnBack_Click"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="93*"/>
+            <ColumnDefinition Width="67*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="lstSP" Margin="80,64,80,159" Grid.ColumnSpan="2">
+            <DataGrid Height="200" Width="632" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged"/>
+        </ListBox>
+        <Button x:Name="btnNhap" Content="Nhập hàng" Margin="180,302,139,66" Click="btnNhap_Click"/>
+        <Button x:Name="btnBan" Content="Bán hàng" Margin="9,302,180,66" Click="btnBan_Click" Grid.Column="1"/>
+        <Button x:Name="btnBack" Content="Return" HorizontalAlignment="Left" Margin="273,397,0,0" VerticalAlignment="Top" Click="btnBack_Click" Grid.Column="1"/>
 
-        </Grid>
+    </Grid>
 </Window>

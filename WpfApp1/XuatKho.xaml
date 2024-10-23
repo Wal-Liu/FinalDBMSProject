@@ -10,7 +10,7 @@
                 <Label Content="Sản Phẩm: " HorizontalAlignment="Left" Margin="80,64,0,0" VerticalAlignment="Top" FontSize="24" Height="50"/>
                 <Label Content="Số Lượng: " HorizontalAlignment="Left" Margin="80,124,0,0" VerticalAlignment="Top" FontSize="24" Height="50"/>
                 <Label Content="Cửa Hàng: " HorizontalAlignment="Left" Margin="80,184,0,0" VerticalAlignment="Top" FontSize="24"/>
-                <ComboBox x:Name="cbbSanPham" HorizontalAlignment="Left" Margin="220,64,0,0" VerticalAlignment="Top" Width="180" Height="40" FontSize="24" VerticalContentAlignment="Center"/>
+                <ComboBox x:Name="cbbSanPham" HorizontalAlignment="Left" Margin="220,64,0,0" VerticalAlignment="Top" Width="180" Height="40" FontSize="24" VerticalContentAlignment="Center" SelectionChanged="cbbSanPham_SelectionChanged"/>
                 <TextBox HorizontalAlignment="Left" Margin="220,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" FontSize="24" Height="40"/>
                 <ComboBox x:Name="CbbCuaHang" HorizontalAlignment="Left" Margin="220,184,0,0" VerticalAlignment="Top" Width="180" Height="40" FontSize="24" VerticalContentAlignment="Center"/>
                 <Button x:Name="btnXuatHang" Content="Xuất hàng" HorizontalAlignment="Center" Margin="0,264,0,0" VerticalAlignment="Top" FontSize="24" Width="150" Click="btnXuatHang_Click"/>
