@@ -23,18 +23,7 @@ BEGIN
         SET soLuong = soLuong + @soLuong
         WHERE maSP = @maSP AND maKho = @maKho
 
-        -- Kiểm tra nếu số lượng bằng 0 thì xóa dòng
-        IF (SELECT soLuong FROM SPThuocKho WHERE maSP = @maSP AND maKho = @maKho) = 0
-        BEGIN
-            DELETE FROM SPThuocKho
-            WHERE maSP = @maSP AND maKho = @maKho
-
-            PRINT 'Xóa sản phẩm khỏi kho vì số lượng bằng 0.'
-        END
-        ELSE
-        BEGIN
-            PRINT 'Cập nhật số lượng sản phẩm thành công.'
-        END
+        PRINT 'Cập nhật số lượng sản phẩm thành công.'
     END
     ELSE
     BEGIN

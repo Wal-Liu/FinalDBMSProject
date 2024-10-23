@@ -77,6 +77,24 @@ BEGIN
 END 
 GO
 
+CREATE PROCEDURE proc_ThemLoaiSP
+    @tenLoaiSP NVARCHAR
+AS
+BEGIN 
+    INSERT INTO LoaiSP(tenLoaiSP) 
+    VALUES(@tenLoaiSP)
+END
+GO
+
+CREATE PROCEDURE proc_XoaLoaiSP
+    @maLoaiSP NVARCHAR
+AS
+BEGIN 
+    DELETE FROM LoaiSP 
+    WHERE maLoaiSP = @maLoaiSP
+END
+GO
+
 DROP PROCEDURE proc_ThemSPVaoKho
 
 DROP PROCEDURE proc_BanSPTuCH 
@@ -85,5 +103,8 @@ DROP PROCEDURE proc_NhapSPVaoCH
 DROP PROCEDURE proc_ThemSanPham
 DROP PROCEDURE proc_XoaSanPham
 DROP PROCEDURE proc_SuaSanPham
+
+DROP PROCEDURE proc_ThemLoaiSP
+DROP PROCEDURE proc_XoaLoaiSP
 
 
