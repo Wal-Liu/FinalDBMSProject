@@ -1,5 +1,4 @@
-﻿USE MASTER 
-USE QuanLySanPham
+﻿USE QLSanPham
 GO
 
 CREATE PROCEDURE proc_ThemSanPham
@@ -77,4 +76,14 @@ BEGIN
     WHERE maSP = @maSP and maCH = @maCH
 END 
 GO
+
+DROP PROCEDURE proc_ThemSPVaoKho
+
+DROP PROCEDURE proc_BanSPTuCH 
+DROP PROCEDURE proc_NhapSPVaoCH
+
+DROP PROCEDURE proc_ThemSanPham
+DROP PROCEDURE proc_XoaSanPham
+DROP PROCEDURE proc_SuaSanPham
+
 
