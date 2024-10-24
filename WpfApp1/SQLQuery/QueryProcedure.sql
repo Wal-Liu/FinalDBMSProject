@@ -130,6 +130,7 @@ begin
 end
 Go
 
+
 create proc proc_LaySoLuongSanPhamTrongCH
 	@maCH int
 as 
