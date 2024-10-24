@@ -56,6 +56,7 @@ namespace WpfApp1
                                                 String maCH = (CbbCuaHang.SelectedItem as ComboBoxItem).Tag.ToString();
                                                 int soLuong = int.Parse(txtSoLuong.Text);
 
+                                                bool successful = false;
                                                 using (SqlConnection connection = new SqlConnection(strCon))
                                                 {
                                                         connection.Open();
@@ -67,12 +68,15 @@ namespace WpfApp1
                                                                 command.Parameters.AddWithValue("@soLuong", soLuong);
 
                                                                 int rowsAffected = command.ExecuteNonQuery();
-
+                                                                if (rowsAffected > 0) successful = true;
                                                                 // Display the number of affected rows (if applicable)
                                                                 //MessageBox.Show($"{rowsAffected} rows affected.");
                                                         }
                                                 }
-                                                MessageBox.Show("Thanh cong");
+                                                if (successful == true)
+                                                        MessageBox.Show("Thanh cong");
+                                                else
+                                                        MessageBox.Show("vui lòng thử lại");
                                         }
                                 }
                                 else

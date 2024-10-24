@@ -11,6 +11,7 @@
                 <Button x:Name="btnNhap" Content="Nhập Kho" Margin="180,302,474,66" Click="btnNhap_Click"/>
                 <Button x:Name="btnXuat" Content="Xuất Kho" Margin="474,302,180,66" Click="btnXuat_Click"/>
                 <Button x:Name="btnBack" Content="Return" HorizontalAlignment="Center" Margin="720,385,0,0" VerticalAlignment="Center" Click="btnBack_Click"/>
+                <DataGrid x:Name="datagridview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="80,64,80,159"/>
 
         </Grid>
 </Window>
