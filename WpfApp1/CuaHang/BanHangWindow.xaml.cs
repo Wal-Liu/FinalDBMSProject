@@ -44,9 +44,6 @@ namespace WpfApp1
                                         {
                                                 command.CommandType = CommandType.StoredProcedure;
                                                 command.Parameters.AddWithValue("@maCuaHang", MaCH);
-
-                                                MessageBox.Show(MaCH.ToString());
-
                                                 SqlDataReader reader = command.ExecuteReader();
                                                 while (reader.Read())
                                                 {

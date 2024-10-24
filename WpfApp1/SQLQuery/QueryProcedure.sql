@@ -132,12 +132,13 @@ Go
 
 
 create proc proc_LaySoLuongSanPhamTrongCH
+	@maSP int,
 	@maCH int
 as 
 begin
 	select SPThuocCH.maSP, tenSP, soLuong
 	from SPThuocCH, SanPham
-	where SPThuocCH.maSP = SanPham.maSP
+	where SPThuocCH.maSP = @maSP
 	and SPThuocCH.maCH = @maCH
 end
 go 
