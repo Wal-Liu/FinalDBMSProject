@@ -75,7 +75,6 @@ CREATE TABLE TaiKhoan
 )
 GO
 
-
 --CREATE TRIGGER PhanQuyen ON TaiKhoan AFTER INSERT
 --AS
 --	BEGIN

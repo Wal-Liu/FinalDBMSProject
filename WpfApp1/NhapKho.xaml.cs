@@ -26,72 +26,104 @@ namespace WpfApp1
                 public NhapKho()
                 {
                         InitializeComponent();
-                        btnMo_Click();
+                        MoKetNoi();
                 }
 
-                private void btnNhapHang_Click(object sender, RoutedEventArgs e)
-                {
-                        MessageBox.Show("Nhap Hang thanh cong");
-                }
-
-                private void loadSanPham()
-                {
-                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        private void btnNhapHang_Click(object sender, RoutedEventArgs e)
                         {
-                                using (SqlConnection connection = new SqlConnection(strCon))
+                                bool isOnlyNumbers = CheckIfOnlyNumbers(txtSoLuong.Text);
+                                if (isOnlyNumbers)
                                 {
-                                        connection.Open();
-                                        using (SqlCommand command = new SqlCommand("proc_LayHetSanPham", connection))
+                                        String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
+                                        String maSP  = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
+                                        int soLuong = int.Parse(txtSoLuong.Text);
+
+                                        using (SqlConnection connection = new SqlConnection(strCon))
                                         {
-                                                command.CommandType = CommandType.StoredProcedure;
-                                                SqlDataReader reader = command.ExecuteReader();
-                                                while (reader.Read())
+                                                connection.Open();
+                                                using (SqlCommand command = new SqlCommand("proc_ThemSPVaoKho", connection))
                                                 {
-                                                        ComboBoxItem comboBoxItem = new ComboBoxItem();
-                                                        comboBoxItem.Content = reader["tenSP"].ToString();
-                                                        comboBoxItem.Tag = reader["maSP"].ToString();
-                                                        cbbSanPham.Items.Add(comboBoxItem);
+                                                        command.CommandType = CommandType.StoredProcedure;
+                                                        command.Parameters.AddWithValue("@maSP", maSP);
+                                                        command.Parameters.AddWithValue("@maKho", 1);
+                                                        command.Parameters.AddWithValue("@soLuong",soLuong);
 
-                                                        MessageBox.Show(comboBoxItem.Tag.ToString());
+                                                        int rowsAffected = command.ExecuteNonQuery(); // Use ExecuteReader for SELECT queries
 
+                                                        // Display the number of affected rows (if applicable)
+                                                        MessageBox.Show($"{rowsAffected} rows affected.");
+                                                }
+                                        }
+                                        MessageBox.Show("Thanh cong");
+                                }
+                                else
+                                {
+                                        MessageBox.Show("Số lượng không được để trống và chỉ được nhập số. Vui lòng nhập lại");
+                                        txtSoLuong.Text = string.Empty;
+                                }
+
+                        }
+
+                        private void loadSanPham()
+                        {
+                                if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                                {
+                                        using (SqlConnection connection = new SqlConnection(strCon))
+                                        {
+                                                connection.Open();
+                                                using (SqlCommand command = new SqlCommand("proc_LayHetSanPham", connection))
+                                                {
+                                                        command.CommandType = CommandType.StoredProcedure;
+                                                        SqlDataReader reader = command.ExecuteReader();
+                                                        while (reader.Read())
+                                                        {
+                                                                ComboBoxItem comboBoxItem = new ComboBoxItem();
+                                                                comboBoxItem.Content = reader["tenSP"].ToString();
+                                                                comboBoxItem.Tag = reader["maSP"].ToString();
+                                                                cbbSanPham.Items.Add(comboBoxItem);
+                                                        }
                                                 }
                                         }
                                 }
                         }
-                }
 
 
-                private void btnMo_Click()
-                {
-                        try
+                        private void MoKetNoi()
                         {
-                                if (sqlcon == null)
+                                try
                                 {
+                                        if (sqlcon == null)
+                                        {
+                                                sqlcon = new SqlConnection(strCon);
+                                        }
                                         sqlcon = new SqlConnection(strCon);
+                                        if (sqlcon.State == ConnectionState.Closed)
+                                        {
+                                                sqlcon.Open();
+                                                //MessageBox.Show("Ket noi thanh cong");
+                                                loadSanPham();
+                                        }
                                 }
-                                sqlcon = new SqlConnection(strCon);
-                                if (sqlcon.State == ConnectionState.Closed)
+                                catch (Exception ex)
                                 {
-                                        sqlcon.Open();
-                                        MessageBox.Show("Ket noi thanh cong");
-                                        loadSanPham();
+                                        MessageBox.Show(ex.Message);
+
                                 }
                         }
-                        catch (Exception ex)
+                        static bool CheckIfOnlyNumbers(string str)
                         {
-                                MessageBox.Show(ex.Message);
-
+                                if (string.IsNullOrEmpty(str))
+                                {
+                                        return false;
+                                }
+                                foreach (char c in str)
+                                {
+                                        if (!char.IsDigit(c))
+                                        {
+                                                return false; 
+                                        }
+                                }
+                                return true;
                         }
-                }
-
-        private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-    }
 }
