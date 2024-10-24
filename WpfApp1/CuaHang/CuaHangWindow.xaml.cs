@@ -49,6 +49,7 @@ namespace WpfApp1
                         command.Parameters.AddWithValue("@maCuaHang", MaCH);
                         // Sử dụng SqlDataAdapter để đổ dữ liệu vào DataTable
                         SqlDataReader reader = command.ExecuteReader();
+                        lstSP.Items.Clear();
                         int ID = 1;
                         while (reader.Read())
                         {
@@ -60,6 +61,9 @@ namespace WpfApp1
                 }
             }
         }
+        private void WindowClosed(object sender, EventArgs e)
+          => loadSanPham(); 
+
         private void MoKetNoi()
         {
             try
@@ -86,12 +90,14 @@ namespace WpfApp1
         private void btnBan_Click(object sender, RoutedEventArgs e)
         {
             BanHangWindow banHangWindow = new BanHangWindow(MaCH);
+            banHangWindow.Closed += WindowClosed; 
             banHangWindow.Show();
         }
 
         private void btnNhap_Click(object sender, RoutedEventArgs e)
         {
             NhapHangWindow nhapHangWindow = new NhapHangWindow(MaCH);
+            nhapHangWindow.Closed += WindowClosed;
             nhapHangWindow.Show();
         }
 

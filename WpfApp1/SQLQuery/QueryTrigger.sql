@@ -88,6 +88,26 @@ BEGIN
 END
 GO
 
+CREATE TRIGGER trg_BanSPTuCH 
+ON SPThuocCH
+AFTER UPDATE
+AS
+BEGIN 
+    DECLARE @maSP INT, @maCH INT, @soLuong INT
+
+    -- Get the updated values
+    SELECT @maSP = maSP, @maCH = maCH, @soLuong = soLuong
+    FROM INSERTED
+
+    -- If soLuong becomes 0, delete the row
+    IF @soLuong = 0
+    BEGIN
+        DELETE FROM BanSPTuCH
+        WHERE maSP = @maSP AND maCH = @maCH
+    END
+END
+GO
+
 DROP TRIGGER trg_NhapSPVaoCH
 
 
