@@ -14,6 +14,24 @@ BEGIN
 END 
 GO
 
+CREATE PROCEDURE proc_ThemLoaiSP
+    @tenLoaiSP NVARCHAR
+AS
+BEGIN 
+    INSERT INTO LoaiSP(tenLoaiSP) 
+    VALUES(@tenLoaiSP)
+END
+GO
+
+CREATE PROCEDURE proc_XoaLoaiSP
+    @maLoaiSP NVARCHAR
+AS
+BEGIN 
+    DELETE FROM LoaiSP 
+    WHERE maLoaiSP = @maLoaiSP
+END
+GO
+
 CREATE PROCEDURE proc_SuaSanPham
     @maSP INT,
     @tenSP NVARCHAR(100), 
@@ -43,6 +61,61 @@ END
 GO
 
 
+create proc proc_LayHetSanPham
+as 
+begin
+	select * from SanPham
+end
+go
+
+-----------------------------------------------------------------------
+--Kho--
+create proc proc_LayHetKho
+as 
+begin
+	select * from Kho
+end
+go 
+-----------------------------------------------------
+CREATE PROCEDURE proc_NhapSPVaoCH 
+    @maSP INT, 
+    @maCH INT,
+    @maKho INT,
+    @soLuong INT 
+AS 
+BEGIN 
+    INSERT INTO SPThuocCH(maSP, maCH, soLuong)
+    VALUES(@maSP, @maCH, @soLuong)
+END 
+GO
+-----------------------------------------------------
+create proc proc_LayHetSanPhamTrongKho
+	@maKho int
+as 
+begin
+	select SPThuocKho.maSP, tenSP, soLuong
+	from SPThuocKho, SanPham
+	where SPThuocKho.maSP = SanPham.maSP
+	and SPThuocKho.maKho = @maKho
+end
+go 
+
+proc_LayHetSanPhamTrongKho @maKho = 1
+
+create proc proc_LaySoLuongSanPhamTrongKho
+	@maSP INT,
+	@maKho INT
+as 
+begin
+	select SPThuocKho.maSP, tenSP, soLuong
+	from SPThuocKho, SanPham
+	where SPThuocKho.maSP = SanPham.maSP
+		and SPThuocKho.maSP = @maSP
+		and SPThuocKho.maKho = @maKho
+end
+go 
+
+
 CREATE PROCEDURE proc_ThemSPVaoKho
     @maSP INT,
     @maKho INT,
@@ -54,16 +127,15 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE proc_NhapSPVaoCH 
-    @maSP INT, 
-    @maCH INT, 
-    @soLuong INT 
-AS 
-BEGIN 
-    INSERT INTO SPThuocCH(maSP, maCH, soLuong)
-    VALUES(@maSP, @maCH, @soLuong)
-END 
-GO
+-----------------------------------------------------------
+--Cửa Hàng--
+
+create proc proc_LayHetCuaHang
+as 
+begin
+	select * from CuaHang
+end
+go 
 
 CREATE PROCEDURE proc_BanSPTuCH
     @maSP INT, 
@@ -77,35 +149,28 @@ BEGIN
 END 
 GO
 
-CREATE PROCEDURE proc_ThemLoaiSP
-    @tenLoaiSP NVARCHAR
-AS
-BEGIN 
-    INSERT INTO LoaiSP(tenLoaiSP) 
-    VALUES(@tenLoaiSP)
-END
-GO
 create proc proc_LayHetSanPhamCH
+	@maCuaHang INT
 as 
 begin
 	select * from SPThuocCH
+	where SPThuocCH.maCH = @maCuaHang
 end
 Go
 
-CREATE PROCEDURE proc_XoaLoaiSP
-    @maLoaiSP NVARCHAR
-AS
-BEGIN 
-    DELETE FROM LoaiSP 
-    WHERE maLoaiSP = @maLoaiSP
-END
-GO
-
-create proc proc_LayHetSanPham
+create proc proc_LaySoLuongSanPhamTrongCH
+	@maCH int
 as 
 begin
-	select * from SanPham
+	select SPThuocCH.maSP, tenSP, soLuong
+	from SPThuocCH, SanPham
+	where SPThuocCH.maSP = SanPham.maSP
+	and SPThuocCH.maCH = @maCH
 end
+go 
+
+
+
 
 create proc proc_giaHoaDon
     @maSP int,
@@ -116,58 +181,36 @@ begin
     where maSP =@maSP
 end
 go
-create proc proc_LaySanPhamTrongCH
-    @maSP INT
-as 
-begin
-    select * from SPThuocCuaHang
-end
-go
-create proc proc_LayHetSanPhamTrongKho
-as 
-begin
-	select SPThuocKho.maSP, tenSP, soLuong
-	from SPThuocKho, SanPham
-	where SPThuocKho.maSP = SanPham.maSP
-end
-go 
-
-create proc proc_LaySoLuongSanPhamTrongKho
-	@maSP INT
-as 
-begin
-	select SPThuocKho.maSP, tenSP, soLuong
-	from SPThuocKho, SanPham
-	where SPThuocKho.maSP = SanPham.maSP
-		and SPThuocKho.maSP = @maSP
-end
-go 
-
-create proc proc_LayHetCuaHang
-as 
-begin
-	select * from CuaHang
-end
-go 
 
 
 
+--Kho--
+DROP PROCEDURE proc_LayHetKho
+DROP PROCEDURE proc_NhapSPVaoCH
+DROP PROCEDURE proc_LayHetSanPhamTrongKho
+DROP PROCEDURE proc_LaySoLuongSanPhamTrongKho
 
 
 DROP PROCEDURE proc_ThemSPVaoKho
 
-DROP PROCEDURE proc_BanSPTuCH 
-DROP PROCEDURE proc_NhapSPVaoCH
+
+
+--Cửa Hàng--
 DROP PROCEDURE proc_LayHetCuaHang
+DROP PROCEDURE proc_BanSPTuCH
+DROP PROCEDURE proc_LayHetSanPhamCH
+DROP PROCEDURE proc_LaySoLuongSanPhamTrongCH
+
+
+DROP PROCEDURE proc_giaHoaDon
+
+
 
 
 DROP PROCEDURE proc_ThemSanPham
 DROP PROCEDURE proc_XoaSanPham
 DROP PROCEDURE proc_SuaSanPham
 DROP PROCEDURE proc_LayHetSanPham
-DROP PROCEDURE proc_LayHetSanPhamTrongKho
-DROP PROCEDURE proc_LaySoLuongSanPhamTrongKho
-
 
 DROP PROCEDURE proc_ThemLoaiSP
 DROP PROCEDURE proc_XoaLoaiSP

@@ -10,6 +10,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
+using WpfApp1.Kho;
+using WpfApp1.CuaHang;
 
 
 namespace WpfApp1
@@ -24,15 +26,19 @@ namespace WpfApp1
 
                 private void btnKho_Click(object sender, RoutedEventArgs e)
                 {
-                        KhoWindow khoWindow = new KhoWindow();
-                        khoWindow.Show();
+                        ChonKhoWindow chonkho = new ChonKhoWindow();
+                        chonkho.Show();
+                        //KhoWindow khoWindow = new KhoWindow();
+                        //khoWindow.Show();
                         this.Close();
                 }
 
                 private void btnCuaHang_Click(object sender, RoutedEventArgs e)
                 {
-                        CuaHangWindow cuaHangWindow = new CuaHangWindow();
-                        cuaHangWindow.Show();
+                        ChonCuaHang chonCuaHang = new ChonCuaHang();
+                        chonCuaHang.Show();
+                        //CuaHangWindow cuaHangWindow = new CuaHangWindow();
+                        //cuaHangWindow.Show();
                         this.Close();
                 }
         }

@@ -1,7 +1,8 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,64 +15,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace WpfApp1.Kho
 {
         /// <summary>
-        /// Interaction logic for KhoWindow.xaml
+        /// Interaction logic for ChonKhoWindow.xaml
         /// </summary>
-        public partial class KhoWindow : Window
+        public partial class ChonKhoWindow : Window
         {
                 string strCon = @"Data Source=WALL-LIU;Initial Catalog=QLSanPham;Integrated Security=True;Encrypt=false";
                 SqlConnection sqlcon = null;
-                public KhoWindow()
+                public ChonKhoWindow()
                 {
                         InitializeComponent();
                         MoKetNoi();
                 }
-
-                private void btnBack_Click(object sender, RoutedEventArgs e)
-                {
-                        MainWindow main = new MainWindow();
-                        main.Show();
-                        this.Close();
-                }
-
-                private void btnNhap_Click(object sender, RoutedEventArgs e)
-                {
-                        NhapKho nhapKho = new NhapKho();
-                        nhapKho.Show();
-                }
-
-                private void btnXuat_Click(object sender, RoutedEventArgs e)
-                {
-                        XuatKho xuatKho = new XuatKho();
-                        xuatKho.Show();
-                }
-
-                private void loadSanPham()
+                private void loadKho()
                 {
                         if (sqlcon != null && sqlcon.State == ConnectionState.Open)
                         {
                                 using (SqlConnection connection = new SqlConnection(strCon))
                                 {
                                         connection.Open();
-                                        using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamTrongKho", connection))
+                                        using (SqlCommand command = new SqlCommand("proc_LayHetKho", connection))
                                         {
                                                 command.CommandType = CommandType.StoredProcedure;
-
-                                                // Create a DataTable to hold the results
-                                                DataTable dataTable = new DataTable();
-
-                                                try
+                                                SqlDataReader reader = command.ExecuteReader();
+                                                while (reader.Read())
                                                 {
-                                                        // Use SqlDataAdapter to fill the DataTable
-                                                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                                                        {
-                                                                adapter.Fill(dataTable);
-                                                        }
+                                                        ComboBoxItem comboBoxItem = new ComboBoxItem();
+                                                        comboBoxItem.Content = reader["tenKho"].ToString();
+                                                        comboBoxItem.Tag = reader["maKho"].ToString();
 
-                                                        // Bind the DataTable to a DataGridView (or any other control)
-                                                        datagridview.DataContext = dataTable; // Assuming you have a DataGridView named dataGridView1
+                                                        cbbKho.Items.Add(comboBoxItem);
                                                 }
                                         }
                                 }
@@ -90,7 +65,7 @@ namespace WpfApp1
                                 {
                                         sqlcon.Open();
                                         //MessageBox.Show("Ket noi thanh cong");
-                                        loadSanPham();
+                                        loadKho();
                                 }
                         }
                         catch (Exception ex)
@@ -100,5 +75,19 @@ namespace WpfApp1
                         }
                 }
 
+                private void btnNext_Click(object sender, RoutedEventArgs e)
+                {
+                        if (cbbKho.SelectedItem == null)
+                        {
+                                MessageBox.Show("Vui lòng Chọn Kho");
+                        }
+                        else
+                        {
+                                int  maKho = int.Parse((cbbKho.SelectedItem as ComboBoxItem).Tag.ToString());
+                                KhoWindow khoWindow = new KhoWindow(maKho);
+                                khoWindow.Show();
+                                this.Close();
+                        }
+                }
         }
 }

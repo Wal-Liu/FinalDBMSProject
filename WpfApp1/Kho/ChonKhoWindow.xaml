@@ -1,0 +1,16 @@
+﻿<Window x:Class="WpfApp1.Kho.ChonKhoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Kho"
+        mc:Ignorable="d"
+        Title="ChonKhoWindow" Height="260" Width="500">
+        <Grid>
+                <Label Content="Chọn Kho" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Center" FontSize="24" Width="115"/>
+                <ComboBox x:Name="cbbKho" HorizontalAlignment="Right" Margin="0,0,80,0" VerticalAlignment="Center" Width="200
+                          " FontSize="24" Height="45"/>
+                <Button x:Name="btnNext" Content="Tiếp tục" HorizontalAlignment="Center" Margin="0,155,0,0" VerticalAlignment="Center" Height="50" Width="130" FontSize="24" Click="btnNext_Click"/>
+
+        </Grid>
+</Window>

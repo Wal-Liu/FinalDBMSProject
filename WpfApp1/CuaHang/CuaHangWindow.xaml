@@ -12,7 +12,7 @@
             <ColumnDefinition Width="67*"/>
         </Grid.ColumnDefinitions>
         <ListBox x:Name="lstSP" Margin="80,64,80,159" Grid.ColumnSpan="2">
-            <DataGrid x:Name="dataGridViewSanPham" Height="200" Width="632" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged"/>
+            <DataGrid x:Name="dataGridViewSanPham" Height="200" Width="632" d:ItemsSource="{d:SampleData ItemCount=5}"/>
         </ListBox>
         <Button x:Name="btnNhap" Content="Nhập hàng" Margin="180,302,139,66" Click="btnNhap_Click"/>
         <Button x:Name="btnBan" Content="Bán hàng" Margin="9,302,180,66" Click="btnBan_Click" Grid.Column="1"/>

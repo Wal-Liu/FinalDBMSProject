@@ -49,7 +49,7 @@ namespace WpfApp1
             ProductName.Content = tenSP;
             QuantityLabel.Content = soLuong;
         }
-        BanHangWindow banHangWindow = new BanHangWindow();
+        BanHangWindow banHangWindow = new BanHangWindow(1);
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

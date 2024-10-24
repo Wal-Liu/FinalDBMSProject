@@ -25,9 +25,11 @@ namespace WpfApp1
         {
                 string strCon = @"Data Source=WALL-LIU;Initial Catalog=QLSanPham;Integrated Security=True;Encrypt=false";
                 SqlConnection sqlcon = null;
-                public XuatKho()
+                private int MaKho;
+                public XuatKho(int maKho)
                 {
                         InitializeComponent();
+                        MaKho = maKho;
                         MoKetNoi();
                 }
                 private int SoLuong = 0;
@@ -65,6 +67,7 @@ namespace WpfApp1
                                                                 command.CommandType = CommandType.StoredProcedure;
                                                                 command.Parameters.AddWithValue("@maSP", maSP);
                                                                 command.Parameters.AddWithValue("@maCH", maCH);
+                                                                command.Parameters.AddWithValue("@maKho", MaKho);
                                                                 command.Parameters.AddWithValue("@soLuong", soLuong);
 
                                                                 int rowsAffected = command.ExecuteNonQuery();
@@ -98,6 +101,7 @@ namespace WpfApp1
                                         using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamTrongKho", connection))
                                         {
                                                 command.CommandType = CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@maKho", MaKho);
                                                 SqlDataReader reader = command.ExecuteReader();
                                                 while (reader.Read())
                                                 {
@@ -110,7 +114,6 @@ namespace WpfApp1
                                 }
                         }
                 }
-
                 private void loadCuaHang()
                 {
                         if (sqlcon != null && sqlcon.State == ConnectionState.Open)
@@ -134,7 +137,6 @@ namespace WpfApp1
                                 }
                         }
                 }
-
 
                 private void MoKetNoi()
                 {
@@ -195,6 +197,7 @@ namespace WpfApp1
                                         {
                                                 command.CommandType = CommandType.StoredProcedure;
                                                 command.Parameters.AddWithValue("@maSP", maSP);
+                                                command.Parameters.AddWithValue("@maKho", MaKho);
                                                 SqlDataReader reader = command.ExecuteReader();
                                                 while (reader.Read())
                                                 {
