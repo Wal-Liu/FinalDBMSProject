@@ -5,11 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="NhapHangWindow" Height="450" Width="800">
-    <Grid>
-        <TextBox x:Name="tbxSoLuong" HorizontalAlignment="Left" Height="30" Margin="280,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" Text="Số lượng"/>
-        <Button Content="Xác nhận" HorizontalAlignment="Left" Height="36" Margin="347,239,0,0" VerticalAlignment="Top" Width="81" Click="btnXacNhan"/>
-        <ComboBox x:Name="cbbSanPham" HorizontalAlignment="Left" Height="38" Margin="280,72,0,0" VerticalAlignment="Top" Width="224" SelectionChanged="cbbSanPham_SelectionChanged"/>
+        Title="NhapHangWindow" Height="400" Width="500">
+        <Grid>
 
-    </Grid>
+
+                <Label Content="Kho Hàng: " HorizontalAlignment="Left" Margin="80,64,0,0" VerticalAlignment="Top" FontSize="24" Height="50"/>
+                <Label Content="Sản Phẩm: " HorizontalAlignment="Left" Margin="80,124,0,0" VerticalAlignment="Top" FontSize="24" Height="50"/>
+                <Label Content="Số Lượng: " HorizontalAlignment="Left" Margin="80,184,0,0" VerticalAlignment="Top" FontSize="24" Height="50"/>
+                <ComboBox x:Name="CbbKhoHang" HorizontalAlignment="Left" Margin="220,64,0,0" VerticalAlignment="Top" Width="180" Height="40" FontSize="24" VerticalContentAlignment="Center" SelectionChanged="CbbKhoHang_SelectionChanged"/>
+                <ComboBox x:Name="cbbSanPham" HorizontalAlignment="Left" Margin="220,124,0,0" VerticalAlignment="Top" Width="180" Height="40" FontSize="24" VerticalContentAlignment="Center" SelectionChanged="cbbSanPham_SelectionChanged"/>
+                <TextBox x:Name="tbxSoLuong" HorizontalAlignment="Left" Margin="220,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" FontSize="24" Height="40"/>
+                <Button x:Name="btnXacNhan" Content="Xác Nhận" HorizontalAlignment="Center" Margin="0,264,0,0" VerticalAlignment="Top" FontSize="24" Width="150" Click="btnXacNhan_Click"/>
+                <Label x:Name="lblThongBao" Content="" HorizontalAlignment="Left" Margin="401,192,0,0" VerticalAlignment="Top" Width="79"/>
+
+
+        </Grid>
 </Window>
