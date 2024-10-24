@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,8 @@ namespace WpfApp1
     /// </summary>
     public partial class CuaHangWindow : Window
     {
+        string strCon = @"Data Source=QUOCTHINH;Initial Catalog=QuanLySanPham;Integrated Security=True";
+        SqlConnection sqlcon = null;
         public CuaHangWindow()
         {
             InitializeComponent();
@@ -29,14 +33,30 @@ namespace WpfApp1
                         main.Show();
                         this.Close();
                 }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void loadSanPham()
         {
+            SqlConnection sqlcon = null;
+            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+            {
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamCH", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
 
+                        // Sử dụng SqlDataAdapter để đổ dữ liệu vào DataTable
+                        SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                        DataTable dataTable = new DataTable();
+                        dataAdapter.Fill(dataTable);
 
+                        // Gán DataTable làm nguồn dữ liệu cho DataGridView
+                        dataGridViewSanPham.DataContext = dataTable;
+                    }
+                }
+            }
         }
-
-        private void btnBan_Click(object sender, RoutedEventArgs e)
+    private void btnBan_Click(object sender, RoutedEventArgs e)
         {
             BanHangWindow banHangWindow = new BanHangWindow();
             banHangWindow.Show();
@@ -47,5 +67,7 @@ namespace WpfApp1
             NhapHangWindow nhapHangWindow = new NhapHangWindow();
             nhapHangWindow.Show();
         }
+
+      
     }
 }

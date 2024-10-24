@@ -83,5 +83,15 @@ namespace WpfApp1
 
                         }
                 }
+
+        private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+    }
 }

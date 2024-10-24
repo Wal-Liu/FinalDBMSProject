@@ -1,4 +1,4 @@
-﻿USE QLSanPham
+﻿USE QuanLySanPham
 GO
 
 CREATE PROCEDURE proc_ThemSanPham
@@ -85,6 +85,12 @@ BEGIN
     VALUES(@tenLoaiSP)
 END
 GO
+create proc proc_LayHetSanPhamCH
+as 
+begin
+	select * from SPThuocCH
+end
+Go
 
 CREATE PROCEDURE proc_XoaLoaiSP
     @maLoaiSP NVARCHAR
@@ -100,9 +106,24 @@ as
 begin
 	select * from SanPham
 end
+go
 
-
-
+create proc proc_giaHoaDon
+    @maSP int,
+    @soLuong int
+as
+begin
+    select donGia * @soluong from SanPham 
+    where maSP =@maSP
+end
+go
+create proc proc_LaySanPhamTrongCH
+    @maSP INT
+as 
+begin
+    select * from SPThuocCuaHang
+end
+go
 DROP PROCEDURE proc_ThemSPVaoKho
 
 DROP PROCEDURE proc_BanSPTuCH 

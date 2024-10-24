@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="NhapHangWindow" Height="450" Width="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="28" Margin="280,94,0,0" TextWrapping="Wrap" Text="Mã đơn hàng" VerticalAlignment="Top" Width="224" TextChanged="tbxMaDonHang"/>
-        <TextBox HorizontalAlignment="Left" Height="30" Margin="280,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" TextChanged="tbxSoLuong" Text="Số lượng"/>
+        <TextBox x:Name="tbxSoLuong" HorizontalAlignment="Left" Height="30" Margin="280,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" Text="Số lượng"/>
         <Button Content="Xác nhận" HorizontalAlignment="Left" Height="36" Margin="347,239,0,0" VerticalAlignment="Top" Width="81" Click="btnXacNhan"/>
+        <ComboBox x:Name="cbbSanPham" HorizontalAlignment="Left" Height="38" Margin="280,72,0,0" VerticalAlignment="Top" Width="224" SelectionChanged="cbbSanPham_SelectionChanged"/>
 
     </Grid>
 </Window>
