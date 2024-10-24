@@ -31,7 +31,37 @@ namespace WpfApp1
 
                 private void btnNhapHang_Click(object sender, RoutedEventArgs e)
                 {
-                        MessageBox.Show("Nhap Hang thanh cong");
+                        bool isOnlyNumbers = CheckIfOnlyNumbers(txtSoLuong.Text);
+                        if (isOnlyNumbers)
+                        {
+                                String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
+                                String maSP  = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
+                                int soLuong = int.Parse(txtSoLuong.Text);
+
+                                using (SqlConnection connection = new SqlConnection(strCon))
+                                {
+                                        connection.Open();
+                                        using (SqlCommand command = new SqlCommand("proc_ThemSPVaoKho", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@maSP", maSP);
+                                                command.Parameters.AddWithValue("@maKho", 1);
+                                                command.Parameters.AddWithValue("@soLuong",soLuong);
+
+                                                int rowsAffected = command.ExecuteNonQuery(); // Use ExecuteReader for SELECT queries
+
+                                                // Display the number of affected rows (if applicable)
+                                                MessageBox.Show($"{rowsAffected} rows affected.");
+                                        }
+                                }
+                                MessageBox.Show("Thanh cong");
+                        }
+                        else
+                        {
+                                MessageBox.Show("Số lượng không được để trống và chỉ được nhập số. Vui lòng nhập lại");
+                                txtSoLuong.Text = string.Empty;
+                        }
+
                 }
 
                 private void loadSanPham()
@@ -51,9 +81,6 @@ namespace WpfApp1
                                                         comboBoxItem.Content = reader["tenSP"].ToString();
                                                         comboBoxItem.Tag = reader["maSP"].ToString();
                                                         cbbSanPham.Items.Add(comboBoxItem);
-
-                                                        MessageBox.Show(comboBoxItem.Tag.ToString());
-
                                                 }
                                         }
                                 }
@@ -73,7 +100,7 @@ namespace WpfApp1
                                 if (sqlcon.State == ConnectionState.Closed)
                                 {
                                         sqlcon.Open();
-                                        MessageBox.Show("Ket noi thanh cong");
+                                        //MessageBox.Show("Ket noi thanh cong");
                                         loadSanPham();
                                 }
                         }
@@ -82,6 +109,37 @@ namespace WpfApp1
                                 MessageBox.Show(ex.Message);
 
                         }
+                }
+
+                private void txtSoLuong_TextInput(object sender, TextCompositionEventArgs e)
+                {
+                        string input = txtSoLuong.Text;
+                        bool isOnlyNumbers = CheckIfOnlyNumbers(input);
+
+                        if (isOnlyNumbers)
+                        {
+                                MessageBox.Show("The string contains only numbers.");
+                        }
+                        else
+                        {
+                                MessageBox.Show("The string contains non-numeric characters.");
+                        }
+                }
+
+                static bool CheckIfOnlyNumbers(string str)
+                {
+                        if (string.IsNullOrEmpty(str))
+                        {
+                                return false;
+                        }
+                        foreach (char c in str)
+                        {
+                                if (!char.IsDigit(c))
+                                {
+                                        return false; 
+                                }
+                        }
+                        return true;
                 }
         }
 }
