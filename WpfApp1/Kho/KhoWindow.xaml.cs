@@ -44,12 +44,16 @@ namespace WpfApp1
         {
             NhapKho nhapKho = new NhapKho(MaKho);
             nhapKho.Show();
+            nhapKho.Closed += WindowClosed; 
         }
+        private void WindowClosed(object sender, EventArgs e)
+          => loadSanPham(); 
 
         private void btnXuat_Click(object sender, RoutedEventArgs e)
         {
             XuatKho xuatKho = new XuatKho(MaKho);
             xuatKho.Show();
+            xuatKho.Closed += WindowClosed; 
         }
 
         private void loadSanPham()
@@ -65,11 +69,9 @@ namespace WpfApp1
                         command.Parameters.AddWithValue("@maKho", MaKho);
                         SqlDataReader reader = command.ExecuteReader();
                         int ID = 1;
+                        lstSP.Items.Clear(); 
                         while (reader.Read())
                         {
-
-
-                            // Using string interpolation for better formatting
                             string item = $"{ID}. MaSP: {reader["maSP"]},           TenSP: {reader["tenSP"]},               SoLuong: {reader["soLuong"]}";
                             lstSP.Items.Add(item);
                             ID++;

@@ -77,7 +77,10 @@ namespace WpfApp1
                             }
                         }
                         if (successful == true)
+                        {
                             MessageBox.Show("Thanh cong");
+                            loadSanPham(); 
+                        }
                         else
                             MessageBox.Show("vui lòng thử lại");
                     }
@@ -88,6 +91,8 @@ namespace WpfApp1
                     txtSoLuong.Text = string.Empty;
                 }
             }
+            this.Close(); 
+            
 
         }
 

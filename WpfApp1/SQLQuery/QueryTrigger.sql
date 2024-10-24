@@ -70,10 +70,25 @@ BEGIN
 
         PRINT 'Thêm sản phẩm vào kho thành công.'
     END
+    IF (@soLuong = (SELECT soLuong from SPThuocKho WHERE maSP = @maSP))
+    BEGIN 
+        DELETE FROM SPThuocKho 
+        WHERE maSP = @maSP
+    END 
+    ELSE 
+    BEGIN 
+		UPDATE SPThuocKho 
+		SET soLuong = soLuong - @soLuong
+		WHERE maSP = @maSP
+    END
+
 
     -- Kết thúc transaction
     COMMIT TRANSACTION
 END
 GO
+
+DROP TRIGGER trg_NhapSPVaoCH
+
 
 
