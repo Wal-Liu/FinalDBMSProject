@@ -1,4 +1,4 @@
-﻿USE QuanLySanPham
+﻿USE QLSanPham
 GO
 
 CREATE PROCEDURE proc_ThemSanPham
@@ -101,6 +101,8 @@ end
 go 
 
 proc_LayHetSanPhamTrongKho @maKho = 1
+
+GO
 
 create proc proc_LaySoLuongSanPhamTrongKho
 	@maSP INT,

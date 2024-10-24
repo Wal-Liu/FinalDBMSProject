@@ -20,8 +20,9 @@ namespace WpfApp1
     /// Interaction logic for HoaDonWindow.xaml
     /// </summary>
     public partial class HoaDonWindow : Window
-    {   int donGia;
-        string strCon = @"Data Source=QUOCTHINH;Initial Catalog=QuanLySanPham;Integrated Security=True";
+    {   
+        int donGia;
+        string strCon = Globals.strcon;
         SqlConnection sqlcon = null;
         public HoaDonWindow(string maSP, string tenSP, int soLuong)
         {   
