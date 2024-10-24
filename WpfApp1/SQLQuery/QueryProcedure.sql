@@ -155,10 +155,13 @@ create proc proc_LayHetSanPhamCH
 	@maCuaHang INT
 as 
 begin
-	select * from SPThuocCH
-	where SPThuocCH.maCH = @maCuaHang
+	select SPThuocCH.maSP, tenSP, soLuong
+	from SPThuocCH, SanPham
+	where SPThuocCH.maSP = SanPham.maSP
+	and SPThuocCH.maCH = @maCuaHang
 end
 Go
+
 
 create proc proc_LaySoLuongSanPhamTrongCH
 	@maCH int

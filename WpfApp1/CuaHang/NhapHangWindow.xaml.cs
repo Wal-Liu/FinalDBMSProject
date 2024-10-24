@@ -103,7 +103,7 @@ namespace WpfApp1
                                                         comboBoxItem.Content = reader["tenKho"].ToString();
                                                         comboBoxItem.Tag = reader["maKho"].ToString();
 
-                                                        CbbKhoHang.Items.Add(comboBoxItem);
+                                                        cbbKhoHang.Items.Add(comboBoxItem);
                                                 }
                                         }
                                 }
@@ -137,7 +137,7 @@ namespace WpfApp1
                 {
                         bool isOnlyNumbers = CheckIfOnlyNumbers(tbxSoLuong.Text);
                         bool isEmpty = CheckIfNull(tbxSoLuong.Text);
-                        if (!isEmpty || cbbSanPham.SelectedItem == null || CbbKhoHang.SelectedItem == null)
+                        if (!isEmpty || cbbSanPham.SelectedItem == null || cbbKhoHang.SelectedItem == null)
                         {
                                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
                         }
@@ -154,7 +154,7 @@ namespace WpfApp1
                                         {
                                                 String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
                                                 String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
-                                                String makho = (CbbKhoHang.SelectedItem as ComboBoxItem).Tag.ToString();
+                                                String makho = (cbbKhoHang.SelectedItem as ComboBoxItem).Tag.ToString();
                                                 int soLuong = int.Parse(tbxSoLuong.Text);
 
                                                 bool successful = false;
