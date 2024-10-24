@@ -31,37 +31,8 @@ namespace WpfApp1
                         InitializeComponent();
                         MoKetNoi();
                 }
-                //private void loadSanPham()
-                //{
-
-                //        SqlConnection sqlcon = null;
-                //        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-                //        {
-                //                using (SqlConnection connection = new SqlConnection(strCon))
-                //                {
-                //                        connection.Open();
-                //                        using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamCH", connection))
-                //                        {
-                //                                command.CommandType = CommandType.StoredProcedure;
-                //                                command.Parameters.AddWithValue("@maCuaHang", MaCH);
-                //                                SqlDataReader reader = command.ExecuteReader();
-                //                                while (reader.Read())
-                //                                {
-                //                                        ComboBoxItem comboBoxItem = new ComboBoxItem();
-                //                                        comboBoxItem.Content = reader["tenSP"].ToString();
-                //                                        comboBoxItem.Tag = reader["maSP"].ToString();
-                //                                        cbbSanPham.Items.Add(comboBoxItem);
-                //                                        MessageBox.Show(comboBoxItem.Tag.ToString());
-
-                //                                }
-                //                        }
-                //                }
-                //        }
-                //}
-
                 private void loadSanPham(int MaKho)
                 {
-                        MessageBox.Show(MaKho.ToString());
                         if (sqlcon != null && sqlcon.State == ConnectionState.Open)
                         {
                                 using (SqlConnection connection = new SqlConnection(strCon))
@@ -83,8 +54,6 @@ namespace WpfApp1
                                 }
                         }
                 }
-
-
 
                 private void loadKhoHang()
                 {
@@ -109,29 +78,6 @@ namespace WpfApp1
                                 }
                         }
                 }
-
-                //private void btnXacNhan_Click(object sender, RoutedEventArgs e)
-                //{
-                //        string tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
-                //        String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
-                //        int soLuong = int.Parse(tbxSoLuong.Text);
-                //        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-                //        {
-                //                using (SqlConnection connection = new SqlConnection(strCon))
-                //                {
-                //                        using (SqlCommand command = new SqlCommand("proc_NhapSPVaoCH ", connection))
-                //                        {
-                //                                command.CommandType = CommandType.StoredProcedure;
-                //                                command.Parameters.AddWithValue("@maSP", maSP);
-                //                                command.Parameters.AddWithValue("@maCH", MaCH);
-                //                                command.Parameters.AddWithValue("@soLuong", soLuong);
-                //                                SqlDataReader reader = command.ExecuteReader();
-
-                //                        }
-                //                }
-                //        }
-                //        MessageBox.Show("OK");
-                //}
                 private int SoLuong = 0;
                 private void btnXacNhan_Click(object sender, RoutedEventArgs e)
                 {
@@ -176,7 +122,10 @@ namespace WpfApp1
                                                         }
                                                 }
                                                 if (successful == true)
+                                                {
                                                         MessageBox.Show("Thanh cong");
+                                                        this.Close();
+                                                }
                                                 else
                                                         MessageBox.Show("vui lòng thử lại");
                                         }
@@ -188,30 +137,7 @@ namespace WpfApp1
                                 }
                         }
 
-        }
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
                 }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                    loadSanPham();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
-        }
-
 
                 private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
                 {

@@ -57,31 +57,7 @@ namespace WpfApp1
                         }
                 }
 
-                private void Button_Click(object sender, RoutedEventArgs e)
-                {
-                        string tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
-                        String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
-                        int soLuong = int.Parse(tbxSoLuong.Text);
-                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-                        {
-                                using (SqlConnection connection = new SqlConnection(strCon))
-                                {
-                                        using (SqlCommand command = new SqlCommand("proc_BanSPTuCH", connection))
-                                        {
-                                                command.CommandType = CommandType.StoredProcedure;
-                                                command.Parameters.AddWithValue("@maSP", maSP);
-                                                command.Parameters.AddWithValue("@maCH", MaCH);
-                                                command.Parameters.AddWithValue("@soLuong", soLuong);
-                                                SqlDataReader reader = command.ExecuteReader();
-
-                                        }
-                                }
-                        }
-
-                        HoaDonWindow hoaDonWindow1 = new HoaDonWindow(maSP, tenSP, soLuong);
-                        hoaDonWindow1.Show();
-                        this.Close();
-                }
+                
 
                 private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
                 {
@@ -134,7 +110,8 @@ namespace WpfApp1
                         }
                 }
 
-                public int SoLuongDonHang = 0;
+                private int SoLuongDonHang = 0;
+                private int soluongconlaisaukhithem = 10;
                 private void btnThem_Click(object sender, RoutedEventArgs e)
                 {
                         bool isOnlyNumbers = CheckIfOnlyNumbers(tbxSoLuong.Text);
@@ -147,7 +124,7 @@ namespace WpfApp1
                         {
                                 if (isOnlyNumbers)
                                 {
-                                        if (int.Parse(tbxSoLuong.Text) > SoLuong)
+                                        if (int.Parse(tbxSoLuong.Text) > soluongconlaisaukhithem)
                                         {
                                                 MessageBox.Show("Số lượng bán ra nhiều hơn số lượng đang có. Vui Lòng Nhập lại");
                                                 tbxSoLuong.Text = string.Empty;
@@ -158,6 +135,8 @@ namespace WpfApp1
                                                 String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
                                                 String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
                                                 int soLuong = int.Parse(tbxSoLuong.Text);
+                                                soluongconlaisaukhithem -= soLuong;
+                                                lblThongBao.Content = "Max: " + soluongconlaisaukhithem.ToString();
                                                 String item = SoLuongDonHang.ToString() +".  " + tenSP + "  " + tbxSoLuong.Text;
                                                 lstHoaDon.Items.Add(item);
                                                
@@ -188,6 +167,37 @@ namespace WpfApp1
                                 return false;
                         }
                         return true;
+                }
+
+                private void btnXacNhan_Click(object sender, RoutedEventArgs e)
+                {
+                        
+                }
+
+                private void Button_Click(object sender, RoutedEventArgs e)
+                {
+                        string tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
+                        String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
+                        int soLuong = int.Parse(tbxSoLuong.Text);
+                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        {
+                                using (SqlConnection connection = new SqlConnection(strCon))
+                                {
+                                        using (SqlCommand command = new SqlCommand("proc_BanSPTuCH", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@maSP", maSP);
+                                                command.Parameters.AddWithValue("@maCH", MaCH);
+                                                command.Parameters.AddWithValue("@soLuong", soLuong);
+                                                SqlDataReader reader = command.ExecuteReader();
+
+                                        }
+                                }
+                        }
+
+                        HoaDonWindow hoaDonWindow1 = new HoaDonWindow(maSP, tenSP, soLuong);
+                        hoaDonWindow1.Show();
+                        this.Close();
                 }
         }
 }

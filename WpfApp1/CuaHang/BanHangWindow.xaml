@@ -18,7 +18,7 @@
                 <ListBox x:Name="lstHoaDon" Margin="180,164,60,45"/>
                 
                 <Button x:Name="btnThem" Content="Thêm" HorizontalAlignment="Left" Margin="80,204,0,0" VerticalAlignment="Top" FontSize="18" Width="85" Height="35" Click="btnThem_Click"/>
-                <Button x:Name="btnXacNhan" Content="Xác nhận" HorizontalAlignment="Left" Margin="80,264,0,0" VerticalAlignment="Top" FontSize="18" Width="85" Height="35"/>
+                <Button x:Name="btnXacNhan" Content="Xác nhận" HorizontalAlignment="Left" Margin="80,264,0,0" VerticalAlignment="Top" FontSize="18" Width="85" Height="35" Click="btnXacNhan_Click"/>
 
 
 
