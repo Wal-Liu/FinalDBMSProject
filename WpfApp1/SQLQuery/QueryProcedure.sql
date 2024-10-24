@@ -78,15 +78,18 @@ end
 go 
 -----------------------------------------------------
 CREATE PROCEDURE proc_NhapSPVaoCH 
-    @maSP INT, 
+CREATE PROCEDURE proc_ThemSPVaoKho
+    @maSP INT,
     @maCH INT,
     @maKho INT,
-    @soLuong INT 
-AS 
-BEGIN 
+    @soLuong INT
+AS
+BEGIN
     INSERT INTO SPThuocCH(maSP, maCH, soLuong)
     VALUES(@maSP, @maCH, @soLuong)
-END 
+    INSERT INTO SPThuocKho(maSP, maKho, soLuong) 
+    VALUES(@maSP, @maKho, @soLuong)
+END
 GO
 -----------------------------------------------------
 create proc proc_LayHetSanPhamTrongKho
@@ -119,14 +122,18 @@ go
 
 
 CREATE PROCEDURE proc_ThemSPVaoKho
-    @maSP INT,
+CREATE PROCEDURE proc_NhapSPVaoCH 
+    @maSP INT, 
     @maKho INT,
-    @soLuong INT
-AS
-BEGIN
+    @maCH INT, 
+    @soLuong INT 
+AS 
+BEGIN 
     INSERT INTO SPThuocKho(maSP, maKho, soLuong) 
     VALUES(@maSP, @maKho, @soLuong)
-END
+    INSERT INTO SPThuocCH(maSP, maCH, soLuong)
+    VALUES(@maSP, @maCH, @soLuong)
+END 
 GO
 
 -----------------------------------------------------------
@@ -183,6 +190,14 @@ begin
     where maSP =@maSP
 end
 go
+CREATE PROCEDURE proc_ThemLoaiSP
+    @tenLoaiSP NVARCHAR
+AS
+BEGIN 
+    INSERT INTO LoaiSP(tenLoaiSP) 
+    VALUES(@tenLoaiSP)
+END
+GO
 
 
 
@@ -192,6 +207,14 @@ DROP PROCEDURE proc_NhapSPVaoCH
 DROP PROCEDURE proc_LayHetSanPhamTrongKho
 DROP PROCEDURE proc_LaySoLuongSanPhamTrongKho
 
+CREATE PROCEDURE proc_XoaLoaiSP
+    @maLoaiSP NVARCHAR
+AS
+BEGIN 
+    DELETE FROM LoaiSP 
+    WHERE maLoaiSP = @maLoaiSP
+END
+GO
 
 DROP PROCEDURE proc_ThemSPVaoKho
 
@@ -199,7 +222,7 @@ DROP PROCEDURE proc_ThemSPVaoKho
 
 --Cửa Hàng--
 DROP PROCEDURE proc_LayHetCuaHang
-DROP PROCEDURE proc_BanSPTuCH
+DROP PROCEDURE proc_BanSPTuCH 
 DROP PROCEDURE proc_LayHetSanPhamCH
 DROP PROCEDURE proc_LaySoLuongSanPhamTrongCH
 
@@ -208,6 +231,7 @@ DROP PROCEDURE proc_giaHoaDon
 
 
 
+DROP PROCEDURE proc_NhapSPVaoCH
 
 DROP PROCEDURE proc_ThemSanPham
 DROP PROCEDURE proc_XoaSanPham

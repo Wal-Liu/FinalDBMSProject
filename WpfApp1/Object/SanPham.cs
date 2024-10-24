@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Object
 {
-    class SanPham
+    internal class SanPham
     {
                 private int maSP;
                 private string tenSP;
@@ -23,7 +23,5 @@ namespace WpfApp1.Object
                         this.moTa = moTa;
                         this.maLoaiSP = maLoaiSP;
                 }
-                
     }
-
 }
