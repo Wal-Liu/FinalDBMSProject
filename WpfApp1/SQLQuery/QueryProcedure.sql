@@ -100,6 +100,36 @@ as
 begin
 	select * from SanPham
 end
+go 
+
+create proc proc_LayHetSanPhamTrongKho
+as 
+begin
+	select SPThuocKho.maSP, tenSP, soLuong
+	from SPThuocKho, SanPham
+	where SPThuocKho.maSP = SanPham.maSP
+end
+go 
+
+create proc proc_LaySoLuongSanPhamTrongKho
+	@maSP INT
+as 
+begin
+	select SPThuocKho.maSP, tenSP, soLuong
+	from SPThuocKho, SanPham
+	where SPThuocKho.maSP = SanPham.maSP
+		and SPThuocKho.maSP = @maSP
+end
+go 
+
+create proc proc_LayHetCuaHang
+as 
+begin
+	select * from CuaHang
+end
+go 
+
+
 
 
 
@@ -107,11 +137,16 @@ DROP PROCEDURE proc_ThemSPVaoKho
 
 DROP PROCEDURE proc_BanSPTuCH 
 DROP PROCEDURE proc_NhapSPVaoCH
+DROP PROCEDURE proc_LayHetCuaHang
+
 
 DROP PROCEDURE proc_ThemSanPham
 DROP PROCEDURE proc_XoaSanPham
 DROP PROCEDURE proc_SuaSanPham
 DROP PROCEDURE proc_LayHetSanPham
+DROP PROCEDURE proc_LayHetSanPhamTrongKho
+DROP PROCEDURE proc_LaySoLuongSanPhamTrongKho
+
 
 DROP PROCEDURE proc_ThemLoaiSP
 DROP PROCEDURE proc_XoaLoaiSP

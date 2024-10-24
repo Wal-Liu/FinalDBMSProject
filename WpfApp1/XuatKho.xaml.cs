@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Drawing;
+using Color = System.Windows.Media.Color;
 
 namespace WpfApp1
 {
@@ -19,19 +23,185 @@ namespace WpfApp1
         /// </summary>
         public partial class XuatKho : Window
         {
+                string strCon = @"Data Source=WALL-LIU;Initial Catalog=QLSanPham;Integrated Security=True;Encrypt=false";
+                SqlConnection sqlcon = null;
                 public XuatKho()
                 {
                         InitializeComponent();
+                        MoKetNoi();
                 }
+                private int SoLuong = 0;
 
                 private void btnXuatHang_Click(object sender, RoutedEventArgs e)
                 {
-                        MessageBox.Show("Xuat Hang thanh cong");
-        }
+                        bool isOnlyNumbers = CheckIfOnlyNumbers(txtSoLuong.Text);
+                        bool isEmpty = CheckIfNull(txtSoLuong.Text);
+                        if (!isEmpty || cbbSanPham.SelectedItem == null || CbbCuaHang.SelectedItem == null)
+                        {
+                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                        }
+                        else
+                        {
+                                if (isOnlyNumbers)
+                                {
+                                        if (int.Parse(txtSoLuong.Text) > SoLuong)
+                                        {
+                                                MessageBox.Show("Số Lượng Xuất ra nhiều hơn số lượng đang có. Vui Lòng Nhập lại");
+                                                txtSoLuong.Text = string.Empty;
+                                        }
+                                        else
+                                        {
+                                                String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
+                                                String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
+                                                String maCH = (CbbCuaHang.SelectedItem as ComboBoxItem).Tag.ToString();
+                                                int soLuong = int.Parse(txtSoLuong.Text);
 
-        private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+                                                using (SqlConnection connection = new SqlConnection(strCon))
+                                                {
+                                                        connection.Open();
+                                                        using (SqlCommand command = new SqlCommand("proc_NhapSPVaoCH ", connection))
+                                                        {
+                                                                command.CommandType = CommandType.StoredProcedure;
+                                                                command.Parameters.AddWithValue("@maSP", maSP);
+                                                                command.Parameters.AddWithValue("@maCH", maCH);
+                                                                command.Parameters.AddWithValue("@soLuong", soLuong);
 
+                                                                int rowsAffected = command.ExecuteNonQuery();
+
+                                                                // Display the number of affected rows (if applicable)
+                                                                //MessageBox.Show($"{rowsAffected} rows affected.");
+                                                        }
+                                                }
+                                                MessageBox.Show("Thanh cong");
+                                        }
+                                }
+                                else
+                                {
+                                        MessageBox.Show("Số Lượng chỉ được nhập số. Vui lòng nhập lại");
+                                        txtSoLuong.Text = string.Empty;
+                                }
+                        }
+
+                }
+
+                private void loadSanPham()
+                {
+                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        {
+                                using (SqlConnection connection = new SqlConnection(strCon))
+                                {
+                                        connection.Open();
+                                        using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamTrongKho", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                SqlDataReader reader = command.ExecuteReader();
+                                                while (reader.Read())
+                                                {
+                                                        ComboBoxItem comboBoxItem = new ComboBoxItem();
+                                                        comboBoxItem.Content = reader["tenSP"].ToString();
+                                                        comboBoxItem.Tag = reader["maSP"].ToString();
+                                                        cbbSanPham.Items.Add(comboBoxItem);
+                                                }
+                                        }
+                                }
+                        }
+                }
+
+                private void loadCuaHang()
+                {
+                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        {
+                                using (SqlConnection connection = new SqlConnection(strCon))
+                                {
+                                        connection.Open();
+                                        using (SqlCommand command = new SqlCommand("proc_LayHetCuaHang", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                SqlDataReader reader = command.ExecuteReader();
+                                                while (reader.Read())
+                                                {
+                                                        ComboBoxItem comboBoxItem = new ComboBoxItem();
+                                                        comboBoxItem.Content = reader["tenCH"].ToString();
+                                                        comboBoxItem.Tag = reader["maCH"].ToString();
+
+                                                        CbbCuaHang.Items.Add(comboBoxItem);
+                                                }
+                                        }
+                                }
+                        }
+                }
+
+
+                private void MoKetNoi()
+                {
+                        try
+                        {
+                                if (sqlcon == null)
+                                {
+                                        sqlcon = new SqlConnection(strCon);
+                                }
+                                sqlcon = new SqlConnection(strCon);
+                                if (sqlcon.State == ConnectionState.Closed)
+                                {
+                                        sqlcon.Open();
+                                        //MessageBox.Show("Ket noi thanh cong");
+                                        loadSanPham();
+                                        loadCuaHang();
+                                }
+                        }
+                        catch (Exception ex)
+                        {
+                                MessageBox.Show(ex.Message);
+
+                        }
+                }
+                static bool CheckIfOnlyNumbers(string str)
+                {
+                        foreach (char c in str)
+                        {
+                                if (!char.IsDigit(c))
+                                {
+                                        return false;
+                                }
+                        }
+                        return true;
+                }
+                static bool CheckIfNull(string str)
+                {
+                        if (string.IsNullOrEmpty(str))
+                        {
+                                return false;
+                        }
+                        return true;
+                }
+
+
+                private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
+                {
+                        String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
+                        int SoLuongToiDa = 0;
+                        string placeholderText = "Max: ";
+
+                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        {
+                                using (SqlConnection connection = new SqlConnection(strCon))
+                                {
+                                        connection.Open();
+                                        using (SqlCommand command = new SqlCommand("proc_LaySoLuongSanPhamTrongKho", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@maSP", maSP);
+                                                SqlDataReader reader = command.ExecuteReader();
+                                                while (reader.Read())
+                                                {
+                                                        SoLuongToiDa = int.Parse(reader["soLuong"].ToString());
+                                                }
+                                        }
+                                }
+                        }
+                        SoLuong = SoLuongToiDa;
+                        placeholderText += SoLuong.ToString();
+                        lblThongBao.Content = placeholderText;
+                }
         }
-    }
 }

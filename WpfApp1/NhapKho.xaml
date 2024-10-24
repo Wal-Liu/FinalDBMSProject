@@ -10,7 +10,7 @@
                 <Label Content="Sản Phẩm: " HorizontalAlignment="Left" Margin="80,64,0,0" VerticalAlignment="Top" FontSize="24" Height="50"/>
                 <Label Content="Số Lượng: " HorizontalAlignment="Left" Margin="80,124,0,0" VerticalAlignment="Top" FontSize="24" Height="50"/>
                 <ComboBox x:Name="cbbSanPham" HorizontalAlignment="Left" Margin="220,64,0,0" VerticalAlignment="Top" Width="180" Height="40" FontSize="24" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="txtSoLuong" HorizontalAlignment="Left" Margin="220,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" FontSize="24" Height="40" TextInput="txtSoLuong_TextInput"/>
+                <TextBox x:Name="txtSoLuong" HorizontalAlignment="Left" Margin="220,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" FontSize="24" Height="40"/>
                 <Button x:Name="btnNhapHang" Content="Nhập hàng" HorizontalAlignment="Center" Margin="0,204,0,0" VerticalAlignment="Top" FontSize="24" Width="150" Click="btnNhapHang_Click"/>
         </Grid>
 </Window>
