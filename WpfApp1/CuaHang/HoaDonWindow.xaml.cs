@@ -61,7 +61,28 @@ namespace WpfApp1
 
                 private void btnXuatHoaDon_Click(object sender, RoutedEventArgs e)
                 {
+                        foreach (HoaDon hoaDon in listHoaDon)
+                        { 
+                                string maSP = hoaDon.lblMaSP.Conten.ToString();
+                                int soLuong = int.Parse(hoaDon.tbxSoLuong.Text);
+                                if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                                {
+                                        using (SqlConnection connection = new SqlConnection(strCon))
+                                        {
+                                                using (SqlCommand command = new SqlCommand("proc_BanSPTuCH", connection))
+                                                {
+                                                        command.CommandType = CommandType.StoredProcedure;
+                                                        command.Parameters.AddWithValue("@maSP", maSP);
+                                                        command.Parameters.AddWithValue("@maCH", MaCH);
+                                                        command.Parameters.AddWithValue("@soLuong", soLuong);
+                                                        int rowsAffected = command.ExecuteNonQuery();
+                                                        MessageBox.Show($"{rowsAffected} rows affected.");
+                                                }
+                                        }
 
+
+                                }
+                        }
                 }
 
                 private int giaTienMoiSanPham(string maSP, string SL)
@@ -76,7 +97,7 @@ namespace WpfApp1
                                                 command.CommandType = CommandType.StoredProcedure;
                                                 command.Parameters.AddWithValue("@maSP", maSP);
                                                 command.Parameters.AddWithValue("@soLuong", SL);
-                                               
+
                                                 thanhtien = (int)(decimal)command.ExecuteScalar();
 
                                         }
@@ -91,20 +112,20 @@ namespace WpfApp1
                 {
 
                         double TongTien = 0;
-                                MessageBox.Show(lstHoaDon.Items.Count.ToString());
+                        MessageBox.Show(lstHoaDon.Items.Count.ToString());
 
-                        foreach (HoaDon hoaDon  in listHoaDon)
+                        foreach (HoaDon hoaDon in listHoaDon)
                         {
                                 MessageBox.Show(MaCH.ToString());
 
                                 string maSP = hoaDon.lblMaSP.Content.ToString();
                                 string sl = hoaDon.tbxSoLuong.Text;
-                                int giaTienMoiSP = giaTienMoiSanPham(maSP,sl);
+                                int giaTienMoiSP = giaTienMoiSanPham(maSP, sl);
                                 MessageBox.Show(maSP, sl);
                                 TongTien += giaTienMoiSP;
 
                         }
-                        lblTongTien.Content = TongTien.ToString() ;
+                        lblTongTien.Content = TongTien.ToString();
                 }
 
                 private void loadHoaDon()
