@@ -59,7 +59,7 @@ begin
 	select * from Kho
 end
 go 
------------------------------------------------------
+
 create proc proc_LayHetSanPhamTrongKho
 	@maKho int
 as 

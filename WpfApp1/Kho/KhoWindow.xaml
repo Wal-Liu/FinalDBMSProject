@@ -7,10 +7,16 @@
         mc:Ignorable="d"
         Title="KhoWindow" Height="450" Width="800">
         <Grid>
-                <ListBox x:Name="lstSP" Margin="80,64,80,159" FontSize="14"/>
+                <ListBox x:Name="lstSP" Margin="80,87,80,148" Grid.ColumnSpan="2" Width="640" Height="199"/>
                 <Button x:Name="btnNhap" Content="Nhập Kho" Margin="180,302,474,66" Click="btnNhap_Click"/>
                 <Button x:Name="btnXuat" Content="Xuất Kho" Margin="474,302,180,66" Click="btnXuat_Click"/>
                 <Button x:Name="btnBack" Content="Return" HorizontalAlignment="Center" Margin="720,385,0,0" VerticalAlignment="Center" Click="btnBack_Click"/>
+
+
+                <Label Content="STT" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="79,37,0,0"/>
+                <Label Content="Mã SP" HorizontalAlignment="Left" Margin="129,37,0,0" VerticalAlignment="Top" Height="50" Width="100" VerticalContentAlignment="Center" FontSize="20"/>
+                <Label Content="Tên Sản Phẩm" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="233" Margin="229,37,0,0" VerticalContentAlignment="Center" FontSize="20" HorizontalContentAlignment="Center"/>
+                <Label Content="Số Lượng" HorizontalAlignment="Right" VerticalAlignment="Top" Height="50" Width="100" VerticalContentAlignment="Center" FontSize="20" Margin="0,37,201,0" Grid.Column="1"/>
 
         </Grid>
 </Window>

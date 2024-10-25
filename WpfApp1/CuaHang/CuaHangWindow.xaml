@@ -6,15 +6,25 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="CuaHangWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="93*"/>
-            <ColumnDefinition Width="67*"/>
-        </Grid.ColumnDefinitions>
-        <ListBox x:Name="lstSP" Margin="80,64,80,159" Grid.ColumnSpan="2"/>
-        <Button x:Name="btnNhap" Content="Nhập hàng" Margin="180,302,139,66" Click="btnNhap_Click"/>
-        <Button x:Name="btnBan" Content="Bán hàng" Margin="9,302,180,66" Click="btnBan_Click" Grid.Column="1"/>
-        <Button x:Name="btnBack" Content="Return" HorizontalAlignment="Left" Margin="273,397,0,0" VerticalAlignment="Top" Click="btnBack_Click" Grid.Column="1"/>
+        <Grid>
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="137*"/>
+                        <RowDefinition Height="297*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="93*"/>
+                        <ColumnDefinition Width="67*"/>
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="lstSP" Margin="80,87,80,148" Grid.ColumnSpan="2" Width="640" Height="199" Grid.RowSpan="2"/>
+                <Button x:Name="btnNhap" Content="Nhập hàng" Margin="180,165,139,66" Click="btnNhap_Click" Grid.Row="1"/>
+                <Button x:Name="btnBan" Content="Bán hàng" Margin="9,165,180,66" Click="btnBan_Click" Grid.Column="1" Grid.Row="1"/>
+                <Button x:Name="btnBack" Content="Return" HorizontalAlignment="Left" Margin="273,260,0,0" VerticalAlignment="Top" Click="btnBack_Click" Grid.Column="1" Grid.Row="1"/>
 
-    </Grid>
+
+                <Label Content="STT" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="79,37,0,0"/>
+                <Label Content="Mã SP" HorizontalAlignment="Left" Margin="129,37,0,0" VerticalAlignment="Top" Height="50" Width="100" VerticalContentAlignment="Center" FontSize="20"/>
+                <Label Content="Tên Sản Phẩm" HorizontalAlignment="Left" VerticalAlignment="Top" Height="50" Width="233" Margin="229,37,0,0" VerticalContentAlignment="Center" FontSize="20" HorizontalContentAlignment="Center"/>
+                <Label Content="Số Lượng" HorizontalAlignment="Right" VerticalAlignment="Top" Height="50" Width="100" VerticalContentAlignment="Center" FontSize="20" Margin="0,37,201,0" Grid.Column="1"/>
+
+        </Grid>
 </Window>

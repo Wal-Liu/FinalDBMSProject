@@ -15,7 +15,7 @@
                 <Label x:Name="lblThongBao" Content="" HorizontalAlignment="Left" Margin="400,111,0,0" VerticalAlignment="Top" Width="79"/>
 
 
-                <ListBox x:Name="lstHoaDon" Margin="180,164,60,45"/>
+                <ListBox x:Name="lstHoaDon" Margin="180,164,60,45" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
                 
                 <Button x:Name="btnThem" Content="Thêm" HorizontalAlignment="Left" Margin="80,204,0,0" VerticalAlignment="Top" FontSize="18" Width="85" Height="35" Click="btnThem_Click"/>
                 <Button x:Name="btnXacNhan" Content="Xác nhận" HorizontalAlignment="Left" Margin="80,264,0,0" VerticalAlignment="Top" FontSize="18" Width="85" Height="35" Click="btnXacNhan_Click"/>
