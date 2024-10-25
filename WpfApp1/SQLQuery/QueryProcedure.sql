@@ -159,40 +159,22 @@ GO
 
 
 --millacenous--
-create proc proc_giaHoaDon
-    @maSP int,
-    @soLuong int
-as
-begin
-    select donGia * @soluong as thanhtien
-    from SanPham 
-    where maSP = @maSP
-end
-go
-
-
-CREATE FUNCTION fun_tinhTien (
-    @maSP INT,
-    @soLuong INT
-)
-RETURNS DECIMAL(10, 2)
+CREATE FUNCTION func_giaHoaDon
+    (@maSP INT, @soLuong INT)
+RETURNS DECIMAL(18, 2)
 AS
 BEGIN
-    DECLARE @tongTien DECIMAL(10, 2);
-    DECLARE @gia DECIMAL(10, 2);
+    DECLARE @total DECIMAL(18, 2);
 
-    -- Get the price of the product based on ProductID
-    SELECT @gia = SanPham.donGia
+    -- Calculate the total price
+    SELECT @total = SanPham.donGia * @soLuong
     FROM SanPham
-    WHERE SanPham.maSP = @maSP;
+    WHERE maSP = @maSP;
 
-    -- Calculate total money
-    SET @tongTien = @gia * @soLuong;
-
-    -- Return the total money
-    RETURN @tongtien;
-END;
+    RETURN @total;
+END
 GO
+
 
 
 --Loai SP--
