@@ -13,48 +13,111 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp1.CuaHang;
+using System.Text.RegularExpressions;
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Interaction logic for HoaDonWindow.xaml
-    /// </summary>
-    public partial class HoaDonWindow : Window
-    {   
-        int donGia;
-        string strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
-        public HoaDonWindow(string maSP, string tenSP, int soLuong)
-        {   
-           
-            InitializeComponent();
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
-                {   
-                    
-                    using (SqlCommand command = new SqlCommand("proc_giaHoaDon", connection))
-                    {
-                        command.Parameters.AddWithValue("@maSP", maSP);
-                        command.Parameters.AddWithValue("@soLuong", soLuong);
-                        command.CommandType = CommandType.StoredProcedure;
-                        SqlDataReader reader = command.ExecuteReader();
-
-                       while (reader.Read())
-                        {
-                            Price.Content = reader["dongia"].ToString();
-                        }
-                    }
-                }
-            }
-            ProductName.Content = tenSP;
-            QuantityLabel.Content = soLuong;
-        }
-        BanHangWindow banHangWindow = new BanHangWindow(1);
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Interaction logic for HoaDonWindow.xaml
+        /// </summary>
+        public partial class HoaDonWindow : Window
         {
-            this.Close();
+                string strCon = Globals.strcon;
+                SqlConnection sqlcon = null;
+
+                private int MaCH;
+                private List<HoaDon> listHoaDon;
+                public HoaDonWindow(int maCH, List<HoaDon> list)
+                {
+                        MaCH = maCH;
+                        this.listHoaDon = list;
+                        InitializeComponent();
+                        MoKetNoi();
+                        loadHoaDon();
+                }
+
+                private void MoKetNoi()
+                {
+                        try
+                        {
+                                if (sqlcon == null)
+                                {
+                                        sqlcon = new SqlConnection(strCon);
+                                }
+                                sqlcon = new SqlConnection(strCon);
+                                if (sqlcon.State == ConnectionState.Closed)
+                                {
+                                        sqlcon.Open();
+                                        //MessageBox.Show("Ket noi thanh cong");
+                                }
+                        }
+                        catch (Exception ex)
+                        {
+                                MessageBox.Show(ex.Message);
+
+                        }
+                }
+
+                private void btnXuatHoaDon_Click(object sender, RoutedEventArgs e)
+                {
+
+                }
+
+                private int giaTienMoiSanPham(string maSP, string SL)
+                {
+                        int thanhtien = 0;
+                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        {
+                                using (SqlConnection connection = new SqlConnection(strCon))
+                                {
+                                        using (SqlCommand command = new SqlCommand("proc_giaHoaDon", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@maSP", maSP);
+                                                command.Parameters.AddWithValue("@soLuong", SL);
+                                                SqlDataReader reader = command.ExecuteReader();
+                                                while (reader.Read())
+                                                {
+                                                        thanhtien += int.Parse(reader["thanhtien"].ToString());
+                                                }
+
+                                        }
+                                }
+                        }
+                        MessageBox.Show(thanhtien.ToString());
+                        return thanhtien;
+                }
+
+
+                private void tinhTien()
+                {
+
+                        double TongTien = 0;
+                                MessageBox.Show(lstHoaDon.Items.Count.ToString());
+
+                        foreach (HoaDon hoaDon  in listHoaDon)
+                        {
+                                MessageBox.Show(MaCH.ToString());
+
+                                string maSP = hoaDon.lblMaSP.Content.ToString();
+                                string sl = hoaDon.tbxSoLuong.Text;
+                                int giaTienMoiSP = giaTienMoiSanPham(maSP,sl);
+                                MessageBox.Show(maSP, sl);
+                                TongTien += giaTienMoiSP;
+
+                        }
+                        lblTongTien.Content = TongTien.ToString() ;
+                }
+
+                private void loadHoaDon()
+                {
+                        foreach (HoaDon hoaDon in listHoaDon)
+                        {
+                                lstHoaDon.Items.Add(hoaDon);
+
+                        }
+                }
         }
-    }
 
 }

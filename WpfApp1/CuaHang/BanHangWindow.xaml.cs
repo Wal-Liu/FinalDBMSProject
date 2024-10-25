@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfApp1.Object;
 using WpfApp1.CuaHang;
+using WpfApp1.UC;
 
 namespace WpfApp1
 {
@@ -115,44 +116,29 @@ namespace WpfApp1
                 private int soluongconlaisaukhithem = 10;
                 private void btnThem_Click(object sender, RoutedEventArgs e)
                 {
-                        bool isOnlyNumbers = CheckIfOnlyNumbers(tbxSoLuong.Text);
-                        bool isEmpty = CheckIfNull(tbxSoLuong.Text);
-                        if (!isEmpty || cbbSanPham.SelectedItem == null)
+                        if (cbbSanPham.SelectedItem == null)
                         {
-                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                                MessageBox.Show("Vui lòng chọn sản phẩm");
                         }
                         else
                         {
-                                if (isOnlyNumbers)
+                                string itemAdd = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
+                                if (checkExist(itemAdd))
                                 {
-                                        if (int.Parse(tbxSoLuong.Text) > soluongconlaisaukhithem)
-                                        {
-                                                MessageBox.Show("Số lượng bán ra nhiều hơn số lượng đang có. Vui Lòng Nhập lại");
-                                                tbxSoLuong.Text = string.Empty;
-                                        }
-                                        else
-                                        {
-                                                SoLuongDonHang++;
-                                                String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
-                                                String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
-                                                int soLuong = int.Parse(tbxSoLuong.Text);
-                                                soluongconlaisaukhithem -= soLuong;
-                                                lblThongBao.Content = "Max: " + soluongconlaisaukhithem.ToString();
-                                                String item = SoLuongDonHang.ToString() + ".  " + tenSP + "  " + tbxSoLuong.Text;
-                                                HoaDon hoadon = new HoaDon();
-                                                hoadon.lblID.Content = SoLuongDonHang.ToString();
-                                                hoadon.lblTenSP.Content = tenSP;
-                                                hoadon.lblMaSP.Content = maSP;
-                                                hoadon.lblSL.Content = SoLuong;
-                                                lstHoaDon.Items.Add(hoadon);
-                                               //lstHoaDon.Items.Add(item);
-
-                                        }
+                                        MessageBox.Show("Sản phẩm đã tồn tại!");
                                 }
                                 else
                                 {
-                                        MessageBox.Show("Số Lượng chỉ được nhập số. Vui lòng nhập lại");
-                                        tbxSoLuong.Text = string.Empty;
+                                        SoLuongDonHang++;
+                                        String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
+                                        String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
+                                        cbbSanPham.Items.Remove(tenSP);
+                                        HoaDon hoadon = new HoaDon();
+                                        hoadon.lblID.Content = SoLuongDonHang.ToString();
+                                        hoadon.lblTenSP.Content = tenSP;
+                                        hoadon.lblMaSP.Content = maSP;
+                                        hoadon.Name = "hoadon" + SoLuongDonHang.ToString();
+                                        lstHoaDon.Items.Add(hoadon);
                                 }
                         }
                 }
@@ -178,33 +164,59 @@ namespace WpfApp1
 
                 private void btnXacNhan_Click(object sender, RoutedEventArgs e)
                 {
-
-                }
-
-                private void Button_Click(object sender, RoutedEventArgs e)
-                {
-                        string tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
-                        String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
-                        int soLuong = int.Parse(tbxSoLuong.Text);
-                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        if(!checkSoLuong())
                         {
-                                using (SqlConnection connection = new SqlConnection(strCon))
+                                MessageBox.Show("Số lượng không hợp lệ, không được bỏ trống và chỉ bao gồm số");
+                        }
+                        else
+                        {
+                                List<HoaDon> listhoadon = new List<HoaDon>();
+                                foreach (var item in lstHoaDon.Items)
                                 {
-                                        using (SqlCommand command = new SqlCommand("proc_BanSPTuCH", connection))
+                                        HoaDon originalHoaDon = item as HoaDon;
+                                        if (originalHoaDon != null)
                                         {
-                                                command.CommandType = CommandType.StoredProcedure;
-                                                command.Parameters.AddWithValue("@maSP", maSP);
-                                                command.Parameters.AddWithValue("@maCH", MaCH);
-                                                command.Parameters.AddWithValue("@soLuong", soLuong);
-                                                SqlDataReader reader = command.ExecuteReader();
+                                                // Create a new instance of HoaDon
+                                                HoaDon newHoaDon = new HoaDon();
+                                                newHoaDon.lblID.Content = originalHoaDon.lblID.Content;
+                                                newHoaDon.lblMaSP.Content = originalHoaDon.lblMaSP.Content;
+                                                newHoaDon.lblTenSP.Content = originalHoaDon. lblTenSP.Content;
+                                                newHoaDon.tbxSoLuong.Text = originalHoaDon.tbxSoLuong.Text;
 
+                                                listhoadon.Add(newHoaDon);
                                         }
                                 }
+                                HoaDonWindow hoadonW = new HoaDonWindow(MaCH,listhoadon);
+                                hoadonW.Show();
                         }
+                }
 
-                        HoaDonWindow hoaDonWindow1 = new HoaDonWindow(maSP, tenSP, soLuong);
-                        hoaDonWindow1.Show();
-                        this.Close();
+                private bool checkExist(String tenSP)
+                {
+                        bool rs = false;
+                        foreach (var item in lstHoaDon.Items)
+                        {
+                                HoaDon hoaDon = item as HoaDon;
+                                if (hoaDon.lblTenSP.Content.ToString() == tenSP)
+                                        rs = true;
+
+                        }
+                        return rs;
+                }
+
+                private bool checkSoLuong()
+                {
+                        bool rs = true;
+                        foreach (var item in lstHoaDon.Items)
+                        {
+                                HoaDon hoaDon = item as HoaDon;
+                                string soLuong = hoaDon.tbxSoLuong.Text;
+                                if(!CheckIfOnlyNumbers(soLuong) || !CheckIfNull(soLuong))
+                                {
+                                        return false;
+                                }
+                        }
+                        return rs;
                 }
         }
 }

@@ -23,6 +23,7 @@ namespace WpfApp1.CuaHang
                 public HoaDon()
                 {
                         InitializeComponent();
+                        tbxSoLuong.Text = "1";
                 }
         }
 }

@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:WpfApp1.CuaHang"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="260">
-        <Grid>
+        <Grid Width="260" Height="50">
                 <Label x:Name="lblID" Content="ID" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblTenSP" Content="Lot Chuot Hinh Con Chuot" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="140" Margin="25,0,0,0" VerticalContentAlignment="Center" FontSize="11"/>
                 <Label x:Name="lblMaSP" Content="2313" HorizontalAlignment="Left" Margin="165,0,0,0" VerticalAlignment="Center" Height="50" Width="40" VerticalContentAlignment="Center"/>
-                <Label x:Name="lblSL" Content="10000" HorizontalAlignment="Left" Margin="205,0,0,0" VerticalAlignment="Center" Height="49" Width="55" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="tbxSoLuong" Width="55" Height="50" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
         </Grid>
 </UserControl>

@@ -107,7 +107,7 @@ begin
 end
 go 
 
-CREATE PROCEDURE proc_BanSPTuCH
+CREATE PROCEDURE proc_BanSPTuCH 
     @maSP INT, 
     @maCH INT, 
     @soLuong INT 
@@ -164,11 +164,11 @@ create proc proc_giaHoaDon
     @soLuong int
 as
 begin
-    select donGia * @soluong from SanPham 
-    where maSP =@maSP
+    select donGia * @soluong as thanhtien
+    from SanPham 
+    where maSP = @maSP
 end
 go
-
 
 
 
@@ -200,7 +200,7 @@ DROP PROCEDURE proc_ThemSPVaoKho
 
 --Cửa Hàng--
 DROP PROCEDURE proc_LayHetCuaHang
-DROP PROCEDURE proc_BanSPTuCH
+DROP PROCEDURE proc_BanSPTuCH 
 DROP PROCEDURE proc_LayHetSanPhamCH
 DROP PROCEDURE proc_LaySoLuongSanPhamTrongCH
 
