@@ -161,10 +161,10 @@ GO
 --millacenous--
 CREATE FUNCTION func_giaHoaDon
     (@maSP INT, @soLuong INT)
-RETURNS DECIMAL(18, 2)
+RETURNS INT
 AS
 BEGIN
-    DECLARE @total DECIMAL(18, 2);
+    DECLARE @total INT
 
     -- Calculate the total price
     SELECT @total = SanPham.donGia * @soLuong
@@ -174,6 +174,16 @@ BEGIN
     RETURN @total;
 END
 GO
+
+CREATE proc proc_tinhGiaHoaDon
+    @maSP INT, 
+    @soLuong INT
+AS 
+BEGIN
+    SELECT dbo.func_giaHoaDon(@maSP, @soLuong)
+END
+GO
+
 
 
 

@@ -17,94 +17,94 @@ using WpfApp1.UC;
 
 namespace WpfApp1
 {
-        /// <summary>
-        /// Interaction logic for CuaHangWindow.xaml
-        /// </summary>
-        public partial class CuaHangWindow : Window
+    /// <summary>
+    /// Interaction logic for CuaHangWindow.xaml
+    /// </summary>
+    public partial class CuaHangWindow : Window
+    {
+        string strCon = Globals.strcon;
+        SqlConnection sqlcon = null;
+        private int MaCH;
+        public CuaHangWindow(int maCH)
         {
-                string strCon = Globals.strcon;
-                SqlConnection sqlcon = null;
-                private int MaCH;
-                public CuaHangWindow(int maCH)
-                {
-                        MaCH = maCH;
-                        InitializeComponent();
-                        MoKetNoi();
-                }
-                private void btnBack_Click(object sender, RoutedEventArgs e)
-                {
-                        MainWindow main = new MainWindow();
-                        main.Show();
-                        this.Close();
-                }
-                private void loadSanPham()
-                {
-                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-                        {
-                                using (SqlConnection connection = new SqlConnection(strCon))
-                                {
-                                        connection.Open();
-                                        using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamCH", connection))
-                                        {
-                                                command.CommandType = CommandType.StoredProcedure;
-                                                command.Parameters.AddWithValue("@maCuaHang", MaCH);
-                                                SqlDataReader reader = command.ExecuteReader();
-                                                lstSP.Items.Clear();
-                                                int ID = 1;
-                                                while (reader.Read())
-                                                {
-                                                        listSP listSP = new listSP();
-                                                        listSP.lblID.Content = ID;
-                                                        listSP.lblMaSP.Content = reader["maSP"];
-                                                        listSP.lblTenSP.Content = reader["tenSP"];
-                                                        listSP.lblSL.Content = reader["soLuong"];
-                                                        lstSP.Items.Add(listSP);
-                                                        ID++;
-                                                }
-                                        }
-                                }
-                        }
-                }
-                private void WindowClosed(object sender, EventArgs e)
-                  => loadSanPham();
-
-                private void MoKetNoi()
-                {
-                        try
-                        {
-                                if (sqlcon == null)
-                                {
-                                        sqlcon = new SqlConnection(strCon);
-                                }
-                                sqlcon = new SqlConnection(strCon);
-                                if (sqlcon.State == ConnectionState.Closed)
-                                {
-                                        sqlcon.Open();
-                                        //MessageBox.Show("Ket noi thanh cong");
-                                        loadSanPham();
-                                }
-                        }
-                        catch (Exception ex)
-                        {
-                                MessageBox.Show(ex.Message);
-
-                        }
-                }
-
-                private void btnBan_Click(object sender, RoutedEventArgs e)
-                {
-                        BanHangWindow banHangWindow = new BanHangWindow(MaCH);
-                        banHangWindow.Closed += WindowClosed;
-                        banHangWindow.Show();
-                }
-
-                private void btnNhap_Click(object sender, RoutedEventArgs e)
-                {
-                        NhapHangWindow nhapHangWindow = new NhapHangWindow(MaCH);
-                        nhapHangWindow.Closed += WindowClosed;
-                        nhapHangWindow.Show();
-                }
-
-
+            MaCH = maCH;
+            InitializeComponent();
+            MoKetNoi();
         }
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
+        }
+        private void loadSanPham()
+        {
+            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+            {
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamCH", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@maCuaHang", MaCH);
+                        SqlDataReader reader = command.ExecuteReader();
+                        lstSP.Items.Clear();
+                        int ID = 1;
+                        while (reader.Read())
+                        {
+                            listSP listSP = new listSP();
+                            listSP.lblID.Content = ID;
+                            listSP.lblMaSP.Content = reader["maSP"];
+                            listSP.lblTenSP.Content = reader["tenSP"];
+                            listSP.lblSL.Content = reader["soLuong"];
+                            lstSP.Items.Add(listSP);
+                            ID++;
+                        }
+                    }
+                }
+            }
+        }
+        private void WindowClosed(object sender, EventArgs e)
+          => loadSanPham();
+
+        private void MoKetNoi()
+        {
+            try
+            {
+                if (sqlcon == null)
+                {
+                    sqlcon = new SqlConnection(strCon);
+                }
+                sqlcon = new SqlConnection(strCon);
+                if (sqlcon.State == ConnectionState.Closed)
+                {
+                    sqlcon.Open();
+                    //MessageBox.Show("Ket noi thanh cong");
+                    loadSanPham();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+
+        private void btnBan_Click(object sender, RoutedEventArgs e)
+        {
+            BanHangWindow banHangWindow = new BanHangWindow(MaCH);
+            banHangWindow.Closed += WindowClosed;
+            banHangWindow.Show();
+        }
+
+        private void btnNhap_Click(object sender, RoutedEventArgs e)
+        {
+            NhapHangWindow nhapHangWindow = new NhapHangWindow(MaCH);
+            nhapHangWindow.Closed += WindowClosed;
+            nhapHangWindow.Show();
+        }
+
+
+    }
 }
