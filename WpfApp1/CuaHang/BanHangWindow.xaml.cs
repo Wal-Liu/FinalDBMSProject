@@ -89,6 +89,30 @@ namespace WpfApp1
                         placeholderText += SoLuong.ToString();
                         lblThongBao.Content = placeholderText;
                 }
+
+                private int soLuongToiDa(string maSP)
+                {
+                        int SoLuongToiDa = 0;
+                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        {
+                                using (SqlConnection connection = new SqlConnection(strCon))
+                                {
+                                        connection.Open();
+                                        using (SqlCommand command = new SqlCommand("proc_LaySoLuongSanPhamTrongCH", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@maSP", maSP);
+                                                command.Parameters.AddWithValue("@maCH", MaCH);
+                                                SqlDataReader reader = command.ExecuteReader();
+                                                while (reader.Read())
+                                                {
+                                                        SoLuongToiDa = int.Parse(reader["soLuong"].ToString());
+                                                }
+                                        }
+                                }
+                        }
+                        return SoLuongToiDa;
+                }
                 private void MoKetNoi()
                 {
                         try
@@ -132,7 +156,6 @@ namespace WpfApp1
                                         SoLuongDonHang++;
                                         String tenSP = (cbbSanPham.SelectedItem as ComboBoxItem).Content.ToString();
                                         String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
-                                        cbbSanPham.Items.Remove(tenSP);
                                         HoaDon hoadon = new HoaDon();
                                         hoadon.lblID.Content = SoLuongDonHang.ToString();
                                         hoadon.lblTenSP.Content = tenSP;
@@ -166,7 +189,7 @@ namespace WpfApp1
                 {
                         if(!checkSoLuong())
                         {
-                                MessageBox.Show("Số lượng không hợp lệ, không được bỏ trống và chỉ bao gồm số");
+                                MessageBox.Show("Số lượng không hợp lệ! \n -Số Lượng không đủ \n -Không được bỏ trống \n -chỉ bao gồm số");
                         }
                         else
                         {
@@ -211,7 +234,8 @@ namespace WpfApp1
                         {
                                 HoaDon hoaDon = item as HoaDon;
                                 string soLuong = hoaDon.tbxSoLuong.Text;
-                                if(!CheckIfOnlyNumbers(soLuong) || !CheckIfNull(soLuong))
+                                string maSP = hoaDon.lblMaSP.Content.ToString();
+                                if(!CheckIfOnlyNumbers(soLuong) || !CheckIfNull(soLuong) ||  int.Parse(soLuong) > soLuongToiDa(maSP))
                                 {
                                         return false;
                                 }

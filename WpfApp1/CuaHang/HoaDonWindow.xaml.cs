@@ -71,16 +71,13 @@ namespace WpfApp1
                         {
                                 using (SqlConnection connection = new SqlConnection(strCon))
                                 {
-                                        using (SqlCommand command = new SqlCommand("proc_giaHoaDon", connection))
+                                        using (SqlCommand command = new SqlCommand("fun_tinhTien", connection))
                                         {
                                                 command.CommandType = CommandType.StoredProcedure;
                                                 command.Parameters.AddWithValue("@maSP", maSP);
                                                 command.Parameters.AddWithValue("@soLuong", SL);
-                                                SqlDataReader reader = command.ExecuteReader();
-                                                while (reader.Read())
-                                                {
-                                                        thanhtien += int.Parse(reader["thanhtien"].ToString());
-                                                }
+                                               
+                                                thanhtien = (int)(decimal)command.ExecuteScalar();
 
                                         }
                                 }

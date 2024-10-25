@@ -171,6 +171,29 @@ end
 go
 
 
+CREATE FUNCTION fun_tinhTien (
+    @maSP INT,
+    @soLuong INT
+)
+RETURNS DECIMAL(10, 2)
+AS
+BEGIN
+    DECLARE @tongTien DECIMAL(10, 2);
+    DECLARE @gia DECIMAL(10, 2);
+
+    -- Get the price of the product based on ProductID
+    SELECT @gia = SanPham.donGia
+    FROM SanPham
+    WHERE SanPham.maSP = @maSP;
+
+    -- Calculate total money
+    SET @tongTien = @gia * @soLuong;
+
+    -- Return the total money
+    RETURN @tongtien;
+END;
+GO
+
 
 --Loai SP--
 CREATE PROCEDURE proc_ThemLoaiSP
