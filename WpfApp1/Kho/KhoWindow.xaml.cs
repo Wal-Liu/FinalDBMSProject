@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfApp1.UC;
+using WpfApp1.Kho;
 
 namespace WpfApp1
 {
@@ -36,8 +37,10 @@ namespace WpfApp1
 
                 private void btnBack_Click(object sender, RoutedEventArgs e)
                 {
-                        MainWindow main = new MainWindow();
-                        main.Show();
+                        //MainWindow main = new MainWindow();
+                        //main.Show();
+                        ChonKhoWindow chonKhoWindow = new ChonKhoWindow();
+                        chonKhoWindow.Show();
                         this.Close();
                 }
 

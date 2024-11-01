@@ -1,4 +1,4 @@
-﻿USE QLSanPham
+﻿nUSE QLSanPham
 GO
 
 --SanPham--
@@ -157,7 +157,6 @@ END
 GO
 
 
-
 --millacenous--
 CREATE FUNCTION func_giaHoaDon
     (@maSP INT, @soLuong INT)
@@ -185,8 +184,6 @@ END
 GO
 
 
-
-
 --Loai SP--
 CREATE PROCEDURE proc_ThemLoaiSP
     @tenLoaiSP NVARCHAR
@@ -206,6 +203,7 @@ BEGIN
 END
 GO
 
+
 --Kho--
 DROP PROCEDURE proc_LayHetKho
 DROP PROCEDURE proc_NhapSPVaoCH
@@ -218,7 +216,6 @@ DROP PROCEDURE proc_LayHetCuaHang
 DROP PROCEDURE proc_BanSPTuCH 
 DROP PROCEDURE proc_LayHetSanPhamCH
 DROP PROCEDURE proc_LaySoLuongSanPhamTrongCH
-
 
 DROP PROCEDURE proc_giaHoaDon
 
