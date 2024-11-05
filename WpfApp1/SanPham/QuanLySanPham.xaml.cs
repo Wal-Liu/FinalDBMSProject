@@ -26,17 +26,25 @@ namespace WpfApp1.SanPham
 
                 private void btnThem_Click(object sender, RoutedEventArgs e)
                 {
-
-        }
+                        ThemSuaSP themSuaSP = new ThemSuaSP();
+                        themSuaSP.Show();
+                }
 
                 private void btnSua_Click(object sender, RoutedEventArgs e)
                 {
-
+                        ThemSuaSP themSuaSP = new ThemSuaSP();
+                        themSuaSP.Show();
                 }
 
                 private void btnXoa_Click(object sender, RoutedEventArgs e)
                 {
+                        MessageBox.Show("Xoá");
+                }
 
+                private void btnLoaiSP_Click(object sender, RoutedEventArgs e)
+                {
+                        QuanLyLoaiSanPham quanLyLoaiSanPham = new QuanLyLoaiSanPham();
+                        quanLyLoaiSanPham.Show();
                 }
         }
 }
