@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:WpfApp1.SanPham"
         mc:Ignorable="d"
         Title="QuanLySanPham" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Grid Width="800" Height="450">
+                <ListView x:Name="lblList" Width="600" Height="300" VerticalAlignment="Top" Margin="100,40,100,0"/>
+                <Button x:Name="btnThem" Content="Thêm" HorizontalAlignment="Left" Margin="200,375,0,40" VerticalAlignment="Bottom" Width="100" Height="30" Click="btnThem_Click"/>
+                <Button x:Name="btnSua" Content="Sửa" HorizontalAlignment="Center" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="100" Height="30" Click="btnSua_Click"/>
+                <Button x:Name="btnXoa" Content="Xoá" HorizontalAlignment="Right" Margin="0,0,200,40" VerticalAlignment="Bottom" Width="100" Height="30" Click="btnXoa_Click"/>
+
+        </Grid>
 </Window>

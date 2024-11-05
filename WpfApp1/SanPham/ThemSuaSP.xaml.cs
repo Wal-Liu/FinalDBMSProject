@@ -15,28 +15,13 @@ using System.Windows.Shapes;
 namespace WpfApp1.SanPham
 {
         /// <summary>
-        /// Interaction logic for QuanLySanPham.xaml
+        /// Interaction logic for ThemSuaSP.xaml
         /// </summary>
-        public partial class QuanLySanPham : Window
+        public partial class ThemSuaSP : Window
         {
-                public QuanLySanPham()
+                public ThemSuaSP()
                 {
                         InitializeComponent();
-                }
-
-                private void btnThem_Click(object sender, RoutedEventArgs e)
-                {
-
-        }
-
-                private void btnSua_Click(object sender, RoutedEventArgs e)
-                {
-
-                }
-
-                private void btnXoa_Click(object sender, RoutedEventArgs e)
-                {
-
                 }
         }
 }

@@ -1,0 +1,24 @@
+﻿<Window x:Class="WpfApp1.SanPham.ThemSuaSP"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.SanPham"
+        mc:Ignorable="d"
+        Title="ThemSuaSP" Height="450" Width="700">
+    <Grid>
+                <Label Content="Tên sản phẩm:" HorizontalAlignment="Left" Margin="100,44,0,0" VerticalAlignment="Top" FontSize="18" Height="40" Width="140"/>
+                <TextBox HorizontalAlignment="Right" Margin="239,44,100,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="360" FontSize="20" Height="40" VerticalContentAlignment="Center" Padding="2,0,0,0"/>
+
+                <Label Content="Tên mã phẩm:" HorizontalAlignment="Left" Margin="100,84,0,0" VerticalAlignment="Top" FontSize="20" Height="40" Width="140"/>
+                <TextBox HorizontalAlignment="Right" Margin="0,84,100,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="360" FontSize="20" Height="40" VerticalContentAlignment="Center" Padding="2,0,0,0"/>
+
+                <Label Content="Đơn giá:" HorizontalAlignment="Left" Margin="100,124,0,0" VerticalAlignment="Top" FontSize="20" Height="40" Width="140"/>
+                <TextBox HorizontalAlignment="Right" Margin="0,124,100,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="360" FontSize="20" Height="40" VerticalContentAlignment="Center" Padding="2,0,0,0"/>
+
+                <Label Content="Mô tả:" HorizontalAlignment="Left" Margin="100,164,0,0" VerticalAlignment="Top" FontSize="20" Height="40" Width="140"/>
+                <TextBox HorizontalAlignment="Right" Margin="0,164,100,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="360" FontSize="20" Height="100" Padding="2,0,0,0"/>
+                <Button x:Name="btnXacNhan" Content="Xác Nhận" HorizontalAlignment="Center" Margin="0,333,0,0" VerticalAlignment="Top" Width="100" Height="30"/>
+
+        </Grid>
+</Window>
