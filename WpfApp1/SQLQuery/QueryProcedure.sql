@@ -1,4 +1,4 @@
-﻿nUSE QLSanPham
+﻿USE QLSanPham
 GO
 
 --SanPham--
@@ -116,11 +116,13 @@ CREATE PROCEDURE proc_BanSPTuCH
     @soLuong INT 
 AS 
 BEGIN 
-    UPDATE SPThuocCH
+    UPDATE dbo.SPThuocCH
     SET soLuong = soluong - @soluong 
     WHERE maSP = @maSP and maCH = @maCH
 END 
 GO
+SELECT * FROM SPThuocCH
+exec proc_BanSPTuCH 1, 1, 319
 
 create proc proc_LayHetSanPhamCH
 	@maCuaHang INT
@@ -134,17 +136,21 @@ end
 Go
 
 
-create proc proc_LaySoLuongSanPhamTrongCH
-	@maSP int,
-	@maCH int
-as 
+create function func_LaySoLuongSanPhamTrongCH
+	(@maSP INT, @maCH INT)
+returns INT
+as
 begin
-	select SPThuocCH.maSP, tenSP, soLuong
-	from SPThuocCH, SanPham
-	where SPThuocCH.maSP = @maSP
-	and SPThuocCH.maCH = @maCH
+	declare @soLuong INT;
+
+	select @soLuong = soLuong
+	from SPThuocCH
+	where maSP = @maSP
+		and maCH = @maCH;
+
+	return @soLuong;
 end
-go 
+go
 
 -----------------------------------------------------
 CREATE PROCEDURE proc_NhapSPVaoCH 
@@ -158,6 +164,8 @@ BEGIN
     VALUES(@maSP, @maCH, @soLuong)
 END 
 GO
+
+
 
 
 --millacenous--
@@ -202,16 +210,16 @@ GO
 DROP PROCEDURE proc_LayHetKho
 DROP PROCEDURE proc_NhapSPVaoCH
 DROP PROCEDURE proc_LayHetSanPhamTrongKho
-DROP PROCEDURE proc_LaySoLuongSanPhamTrongKho
 DROP PROCEDURE proc_ThemSPVaoKho
 
 --Cửa Hàng--
 DROP PROCEDURE proc_LayHetCuaHang
 DROP PROCEDURE proc_BanSPTuCH 
 DROP PROCEDURE proc_LayHetSanPhamCH
-DROP PROCEDURE proc_LaySoLuongSanPhamTrongCH
 
-DROP PROCEDURE func_giaHoaDon
+DROP FUNCTION func_giaHoaDon
+DROP FUNCTION func_LaySoLuongSanPhamTrongKho
+DROP FUNCTION func_LaySoLuongSanPhamTrongCH
 
 --SanPham-- 
 DROP PROCEDURE proc_ThemSanPham 

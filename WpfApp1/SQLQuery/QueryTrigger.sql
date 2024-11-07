@@ -93,21 +93,20 @@ ON SPThuocCH
 AFTER UPDATE
 AS
 BEGIN 
-    DECLARE @maSP INT, @maCH INT, @soLuong INT
-
-    -- Get the updated values
-    SELECT @maSP = maSP, @maCH = maCH, @soLuong = soLuong
-    FROM INSERTED
-
-    -- If soLuong becomes 0, delete the row
-    IF @soLuong = 0
-    BEGIN
-        DELETE FROM BanSPTuCH
-        WHERE maSP = @maSP AND maCH = @maCH
-    END
+    -- Delete rows in SPThuocCH where soLuong becomes 0 after the update
+    DELETE FROM SPThuocCH
+    WHERE soLuong = 0
+      AND EXISTS (
+          SELECT 1
+          FROM INSERTED i
+          WHERE i.maSP = SPThuocCH.maSP
+            AND i.maCH = SPThuocCH.maCH
+      );
 END
 GO
 
+DROP TRIGGER trg_SuaSPThuocKho
+DROP TRIGGER trg_BanSPTuCH
 DROP TRIGGER trg_NhapSPVaoCH
 
 

@@ -40,7 +40,7 @@ CREATE TABLE SPThuocKho
 (
 	maSP INT NOT NULL, 
 	maKho INT NOT NULL, 
-	soLuong INT NOT NULL CHECK (soLuong > 0), 
+	soLuong INT NOT NULL CHECK (soLuong >= 0), 
 	FOREIGN KEY (maSP) REFERENCES SanPham(maSP), 
 	FOREIGN KEY (maKho) REFERENCES Kho(maKho), 
 	PRIMARY KEY (maKho, maSP)
@@ -60,7 +60,7 @@ CREATE TABLE SPThuocCH
 (
 	maSP INT NOT NULL, 
 	maCH INT NOT NULL, 
-	soLuong INT NOT NULL CHECK (soLuong > 0), 
+	soLuong INT NOT NULL CHECK (soLuong >= 0), 
 	FOREIGN KEY (maSP) REFERENCES SanPham(maSP), 
 	FOREIGN KEY (maCH) REFERENCES CuaHang(maCH), 
 	PRIMARY KEY (maCH, maSP)
@@ -85,25 +85,3 @@ DROP TABLE Kho
 DROP TABLE CuaHang
 DROP TABLE LoaiSP
 
-
-
-
---CREATE TRIGGER PhanQuyen ON TaiKhoan AFTER INSERT
---AS
---	BEGIN
---		DECLARE @tenTaiKhoan VARCHAR
---		DECLARE @viTri VARCHAR
-		
---		SELECT @tenTaiKhoan = i.tenTaiKhoan, @viTri = i.viTri
---		FROM INSERTED i
-		
---		IF @viTri = 'quanly' 
---		BEGIN
---			EXEC('GRANT ALL PRIVILEGE ON DATABASE [QuanLySanPham] to [' + @tenTaiKhoan + ']')
---		END
---		ELSE 
---		BEGIN 
---			EXEC('GRANT SELECT, INSERT, UPDATE, DELETE ON DATABASE [QuanLySanPham] to [' + @tenTaiKhoan + ']') 
---		END
---	END;
---GO

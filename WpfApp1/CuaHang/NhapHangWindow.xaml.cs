@@ -142,7 +142,7 @@ namespace WpfApp1
         private void cbbSanPham_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             String maSP = (cbbSanPham.SelectedItem as ComboBoxItem).Tag.ToString();
-            string MaKho = (cbbKhoHang.SelectedItem as ComboBoxItem).Tag.ToString();
+            string maKho = (cbbKhoHang.SelectedItem as ComboBoxItem).Tag.ToString();
             int SoLuongToiDa = 0;
             string placeholderText = "Max: ";
 
@@ -151,16 +151,9 @@ namespace WpfApp1
                 using (SqlConnection connection = new SqlConnection(strCon))
                 {
                     connection.Open();
-                    using (SqlCommand command = new SqlCommand("proc_LaySoLuongSanPhamTrongKho", connection))
+                    using (SqlCommand command = new SqlCommand("SELECT dbo.func_LaySoLuongSanPhamTrongKho(" + maSP + ", " + maKho + ")", connection))
                     {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@maSP", maSP);
-                        command.Parameters.AddWithValue("@maKho", MaKho);
-                        SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            SoLuongToiDa = int.Parse(reader["soLuong"].ToString());
-                        }
+                        SoLuongToiDa = int.Parse(command.ExecuteScalar().ToString()); 
                     }
                 }
             }
