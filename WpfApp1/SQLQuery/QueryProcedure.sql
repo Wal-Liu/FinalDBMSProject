@@ -71,18 +71,21 @@ begin
 end
 go 
 
-create proc proc_LaySoLuongSanPhamTrongKho
-	@maSP INT,
-	@maKho INT
-as 
+create function func_LaySoLuongSanPhamTrongKho
+	(@maSP INT, @maKho INT)
+returns INT
+as
 begin
-	select SPThuocKho.maSP, tenSP, soLuong
-	from SPThuocKho, SanPham
-	where SPThuocKho.maSP = SanPham.maSP
-		and SPThuocKho.maSP = @maSP
-		and SPThuocKho.maKho = @maKho
+	declare @soLuong INT;
+
+	select @soLuong = soLuong
+	from SPThuocKho
+	where maSP = @maSP
+		and maKho = @maKho;
+
+	return @soLuong;
 end
-go 
+go
 
 
 CREATE PROCEDURE proc_ThemSPVaoKho
@@ -174,15 +177,6 @@ BEGIN
 END
 GO
 
-CREATE proc proc_tinhGiaHoaDon
-    @maSP INT, 
-    @soLuong INT
-AS 
-BEGIN
-    SELECT dbo.func_giaHoaDon(@maSP, @soLuong)
-END
-GO
-
 
 --Loai SP--
 CREATE PROCEDURE proc_ThemLoaiSP
@@ -217,7 +211,7 @@ DROP PROCEDURE proc_BanSPTuCH
 DROP PROCEDURE proc_LayHetSanPhamCH
 DROP PROCEDURE proc_LaySoLuongSanPhamTrongCH
 
-DROP PROCEDURE proc_giaHoaDon
+DROP PROCEDURE func_giaHoaDon
 
 --SanPham-- 
 DROP PROCEDURE proc_ThemSanPham 
