@@ -121,8 +121,6 @@ BEGIN
     WHERE maSP = @maSP and maCH = @maCH
 END 
 GO
-SELECT * FROM SPThuocCH
-exec proc_BanSPTuCH 1, 1, 319
 
 create proc proc_LayHetSanPhamCH
 	@maCuaHang INT

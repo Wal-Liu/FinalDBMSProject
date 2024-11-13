@@ -14,14 +14,18 @@ using System.Windows.Shapes;
 
 namespace WpfApp1.SanPham
 {
-        /// <summary>
-        /// Interaction logic for ThemSuaSP.xaml
-        /// </summary>
-        public partial class ThemSuaSP : Window
+    /// <summary>
+    /// Interaction logic for ThemSuaSP.xaml
+    /// </summary>
+
+
+    public partial class ThemSuaSP : Window
+    {
+        private int? sanPhamId = null;
+        public ThemSuaSP(int? sanPhamId = null)
         {
-                public ThemSuaSP()
-                {
-                        InitializeComponent();
-                }
+            InitializeComponent();
+            this.sanPhamId = sanPhamId;
         }
+    }
 }
