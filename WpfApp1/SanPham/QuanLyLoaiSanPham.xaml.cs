@@ -98,5 +98,62 @@ namespace WpfApp1.SanPham
                         load();
 
                 }
+
+                private void btnThem_Click(object sender, RoutedEventArgs e)
+                {
+                        string tenLoaiSP = txbTenLoaiSP.Text;
+                        if (checkExit(tenLoaiSP) == true)
+                        {
+                                MessageBox.Show("Loại sản phẩm đã tồn tại!");
+                                return;
+                        }
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("proc_ThemLoaiSP", connection))
+                                {
+                                        command.CommandType = CommandType.StoredProcedure;
+                                        command.Parameters.AddWithValue("@tenLoaiSP", tenLoaiSP);
+                                        SqlDataReader reader = command.ExecuteReader();
+                                }
+                        }
+                        load();
+                }
+                private bool checkExit(String tenLoaiSP)
+                {
+                        foreach(ListViewItem item in lstLoaiSP.Items)
+                        {
+                                if (item.Content.ToString() == tenLoaiSP) return true;
+                        }
+                        return false;
+                }
+
+                private void btnSua_Click(object sender, RoutedEventArgs e)
+                {
+                        string tenLoaiSP = txbTenLoaiSP.Text;
+                        if (checkExit(tenLoaiSP) == true)
+                        {
+                                MessageBox.Show("Loại sản phẩm đã tồn tại!");
+                                return;
+                        }
+                        if (lstLoaiSP.SelectedIndex < 0)
+                        {
+                                MessageBox.Show("vui lòng chọn 1 loại Sản Phẩm");
+                                return;
+                        }
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("proc_SuaLoaiSP", connection))
+                                {
+                                        command.CommandType = CommandType.StoredProcedure;
+                                        command.Parameters.AddWithValue("@maLoaiSP", MaLoaiSPDuocChon);
+                                        command.Parameters.AddWithValue("@tenLoaiSP", tenLoaiSP);
+
+                                        SqlDataReader reader = command.ExecuteReader();
+                                }
+                        }
+                        load();
+                }
         }
 }

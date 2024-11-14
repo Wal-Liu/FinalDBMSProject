@@ -11,9 +11,9 @@
                 <Label Content="Loại Sản Phẩm: " HorizontalAlignment="Left" Margin="50,199,0,0" VerticalAlignment="Top" Height="25" Width="90"/>
                 <TextBox x:Name="txbTenLoaiSP" HorizontalAlignment="Left" Margin="140,199,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="210" Height="25" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
                 </TextBox>
-                <Button x:Name="btnThem" Content="Thêm" HorizontalAlignment="Left" Margin="100,260,0,0" VerticalAlignment="Top" Width="70" Height="20"/>
-                <Button x:Name="btnXoa" Content="Sửa" HorizontalAlignment="Right" Margin="0,260,100,0" VerticalAlignment="Top" Width="70" Height="20" Click="btnXoa_Click"/>
-
+                <Button x:Name="btnThem" Content="Thêm" HorizontalAlignment="Left" Margin="60,260,0,0" VerticalAlignment="Top" Width="70" Height="20" Click="btnThem_Click"/>
+                <Button x:Name="btnXoa" Content="Xoá" HorizontalAlignment="Right" Margin="0,260,60,0" VerticalAlignment="Top" Width="70" Height="20" Click="btnXoa_Click"/>
+                <Button x:Name="btnSua" Content="Sửa" Width="70" Height="20" Margin="165,260,165,54" Click="btnSua_Click"/>
 
 
         </Grid>

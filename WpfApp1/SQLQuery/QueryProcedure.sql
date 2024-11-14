@@ -218,6 +218,17 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE proc_SuaLoaiSanPham
+    @maloaiSP INT,
+    @tenloaiSP NVARCHAR(100)
+AS 
+BEGIN 
+    UPDATE LoaiSanPham
+    SET tenLoaiSP = @tenLoaiSP
+    WHERE maLoaiSP = @maLoaiSP
+END 
+GO
+
 create proc proc_LayHetLoaiSP
 as 
 begin
@@ -249,6 +260,7 @@ DROP PROCEDURE proc_LayHetSanPham
 DROP PROCEDURE proc_LayHetLoaiSP 
 DROP PROCEDURE proc_XoaLoaiSP
 DROP PROCEDURE proc_ThemLoaiSP 
+DROP PROCEDURE proc_SualLoaiSanPham
 drop function func_LayTenLoaiSP
 GO
 
