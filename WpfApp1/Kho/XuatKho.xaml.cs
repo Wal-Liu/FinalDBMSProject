@@ -23,14 +23,11 @@ namespace WpfApp1
     /// </summary>
     public partial class XuatKho : Window
     {
-        string strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
         private int MaKho;
         public XuatKho(int maKho)
         {
             InitializeComponent();
             MaKho = maKho;
-            MoKetNoi();
         }
         private int SoLuong = 0;
 
@@ -59,7 +56,7 @@ namespace WpfApp1
                         int soLuong = int.Parse(txtSoLuong.Text);
 
                         bool successful = false;
-                        using (SqlConnection connection = new SqlConnection(strCon))
+                        using (SqlConnection connection = DBConnection.connect())
                         {
                             connection.Open();
                             using (SqlCommand command = new SqlCommand("proc_NhapSPVaoCH ", connection))
@@ -98,9 +95,7 @@ namespace WpfApp1
 
         private void loadSanPham()
         {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamTrongKho", connection))
@@ -117,13 +112,10 @@ namespace WpfApp1
                         }
                     }
                 }
-            }
         }
         private void loadCuaHang()
         {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("proc_LayHetCuaHang", connection))
@@ -140,31 +132,6 @@ namespace WpfApp1
                         }
                     }
                 }
-            }
-        }
-
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
-                }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                    loadSanPham();
-                    loadCuaHang();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
         }
         static bool CheckIfOnlyNumbers(string str)
         {
@@ -193,9 +160,7 @@ namespace WpfApp1
             int SoLuongToiDa = 0;
             string placeholderText = "Max: ";
 
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("SELECT dbo.func_LaySoLuongSanPhamTrongKho(" + maSP + ", " + MaKho + ")"  , connection))
@@ -203,7 +168,6 @@ namespace WpfApp1
                         SoLuongToiDa = int.Parse(command.ExecuteScalar().ToString()); 
                     }
                 }
-            }
             SoLuong = SoLuongToiDa;
             placeholderText += SoLuong.ToString();
             lblThongBao.Content = placeholderText;

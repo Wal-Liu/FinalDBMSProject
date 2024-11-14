@@ -22,20 +22,15 @@ namespace WpfApp1
     /// </summary>
     public partial class NhapHangWindow : Window
     {
-        String strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
         private int MaCH;
         public NhapHangWindow(int maCH)
         {
             MaCH = maCH;
             InitializeComponent();
-            MoKetNoi();
         }
         private void loadSanPham(int MaKho)
         {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamTrongKho", connection))
@@ -52,14 +47,11 @@ namespace WpfApp1
                         }
                     }
                 }
-            }
         }
 
         private void loadKhoHang()
         {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("proc_LayHetKho", connection))
@@ -76,7 +68,6 @@ namespace WpfApp1
                         }
                     }
                 }
-            }
         }
         private int SoLuong = 0;
         private void btnXacNhan_Click(object sender, RoutedEventArgs e)
@@ -104,9 +95,8 @@ namespace WpfApp1
                         int soLuong = int.Parse(tbxSoLuong.Text);
 
                         bool successful = false;
-                        using (SqlConnection connection = new SqlConnection(strCon))
+                        using (SqlConnection connection = DBConnection.connect())
                         {
-                            connection.Open();
                             using (SqlCommand command = new SqlCommand("proc_NhapSPVaoCH ", connection))
                             {
                                 command.CommandType = CommandType.StoredProcedure;
@@ -146,9 +136,7 @@ namespace WpfApp1
             int SoLuongToiDa = 0;
             string placeholderText = "Max: ";
 
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("SELECT dbo.func_LaySoLuongSanPhamTrongKho(" + maSP + ", " + maKho + ")", connection))
@@ -156,7 +144,6 @@ namespace WpfApp1
                         SoLuongToiDa = int.Parse(command.ExecuteScalar().ToString()); 
                     }
                 }
-            }
             SoLuong = SoLuongToiDa;
             placeholderText += SoLuong.ToString();
             lblThongBao.Content = placeholderText;
@@ -169,28 +156,6 @@ namespace WpfApp1
         }
 
 
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
-                }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                    loadKhoHang();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
-        }
         static bool CheckIfOnlyNumbers(string str)
         {
             foreach (char c in str)

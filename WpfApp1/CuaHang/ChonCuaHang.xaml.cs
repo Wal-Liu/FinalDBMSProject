@@ -21,59 +21,32 @@ namespace WpfApp1.CuaHang
     /// </summary>
     public partial class ChonCuaHang : Window
     {
-        string strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
         public ChonCuaHang()
         {
             InitializeComponent();
-            MoKetNoi();
         }
         private void loadCuaHang()
         {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+            using (SqlConnection connection = DBConnection.connect())
             {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("proc_LayHetCuaHang", connection))
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand("proc_LayHetCuaHang", connection))
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        command.CommandType = CommandType.StoredProcedure;
-                        SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            ComboBoxItem comboBoxItem = new ComboBoxItem();
-                            comboBoxItem.Content = reader["tenCH"].ToString();
-                            comboBoxItem.Tag = reader["maCH"].ToString();
+                        ComboBoxItem comboBoxItem = new ComboBoxItem();
+                        comboBoxItem.Content = reader["tenCH"].ToString();
+                        comboBoxItem.Tag = reader["maCH"].ToString();
 
-                            cbbCuaHang.Items.Add(comboBoxItem);
-                        }
+                        cbbCuaHang.Items.Add(comboBoxItem);
                     }
                 }
             }
         }
 
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
-                }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                    loadCuaHang();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
 
-            }
-        }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {

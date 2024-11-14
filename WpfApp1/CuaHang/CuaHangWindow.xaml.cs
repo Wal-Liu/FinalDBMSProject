@@ -23,14 +23,11 @@ namespace WpfApp1
         /// </summary>
         public partial class CuaHangWindow : Window
         {
-                string strCon = Globals.strcon;
-                SqlConnection sqlcon = null;
                 private int MaCH;
                 public CuaHangWindow(int maCH)
                 {
                         MaCH = maCH;
                         InitializeComponent();
-                        MoKetNoi();
                 }
                 private void btnBack_Click(object sender, RoutedEventArgs e)
                 {
@@ -40,9 +37,7 @@ namespace WpfApp1
                 }
                 private void loadSanPham()
                 {
-                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-                        {
-                                using (SqlConnection connection = new SqlConnection(strCon))
+                                using (SqlConnection connection = DBConnection.connect())
                                 {
                                         connection.Open();
                                         using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamCH", connection))
@@ -65,32 +60,9 @@ namespace WpfApp1
                                         }
                                 }
                         }
-                }
                 private void WindowClosed(object sender, EventArgs e)
                   => loadSanPham();
 
-                private void MoKetNoi()
-                {
-                        try
-                        {
-                                if (sqlcon == null)
-                                {
-                                        sqlcon = new SqlConnection(strCon);
-                                }
-                                sqlcon = new SqlConnection(strCon);
-                                if (sqlcon.State == ConnectionState.Closed)
-                                {
-                                        sqlcon.Open();
-                                        //MessageBox.Show("Ket noi thanh cong");
-                                        loadSanPham();
-                                }
-                        }
-                        catch (Exception ex)
-                        {
-                                MessageBox.Show(ex.Message);
-
-                        }
-                }
 
                 private void btnBan_Click(object sender, RoutedEventArgs e)
                 {

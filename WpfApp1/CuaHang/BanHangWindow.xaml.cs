@@ -24,22 +24,17 @@ namespace WpfApp1
     /// </summary>
     public partial class BanHangWindow : Window
     {
-        string strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
         private int MaCH;
         private int SoLuong;
         public BanHangWindow(int maCH)
         {
             MaCH = maCH;
             InitializeComponent();
-            MoKetNoi();
         }
 
         private void loadSanPham()
         {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamCH", connection))
@@ -57,7 +52,6 @@ namespace WpfApp1
                     }
                 }
             }
-        }
 
 
 
@@ -67,9 +61,7 @@ namespace WpfApp1
             int SoLuongToiDa = 0;
             string placeholderText = "Max: ";
 
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("SELECT dbo.func_LaySoLuongSanPhamTrongCH(" + maSP + ", " + MaCH + ")", connection))
@@ -77,7 +69,6 @@ namespace WpfApp1
                         SoLuongToiDa = int.Parse(command.ExecuteScalar().ToString());
                     }
                 }
-            }
             SoLuong = SoLuongToiDa;
             placeholderText += SoLuong.ToString();
             lblThongBao.Content = placeholderText;
@@ -86,9 +77,7 @@ namespace WpfApp1
         private int soLuongToiDa(string maSP)
         {
             int SoLuongToiDa = 0;
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("SELECT dbo.func_LaySoLuongSanPhamTrongCH(" + maSP + ", " + MaCH + ")", connection))
@@ -96,30 +85,7 @@ namespace WpfApp1
                         SoLuongToiDa = int.Parse(command.ExecuteScalar().ToString());
                     }
                 }
-            }
             return SoLuongToiDa;
-        }
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
-                }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                    loadSanPham();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
         }
 
         private int SoLuongDonHang = 0;

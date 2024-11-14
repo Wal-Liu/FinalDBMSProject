@@ -18,99 +18,69 @@ using WpfApp1.Kho;
 
 namespace WpfApp1
 {
-        /// <summary>
-        /// Interaction logic for KhoWindow.xaml
-        /// </summary>
-        public partial class KhoWindow : Window
+    /// <summary>
+    /// Interaction logic for KhoWindow.xaml
+    /// </summary>
+    public partial class KhoWindow : Window
+    {
+
+        private int MaKho;
+        public KhoWindow(int maKho)
         {
-                string strCon = Globals.strcon;
-                SqlConnection sqlcon = null;
-
-                private int MaKho;
-                public KhoWindow(int maKho)
-                {
-                        InitializeComponent();
-                        MaKho = maKho;
-                        MoKetNoi();
-
-                }
-
-                private void btnBack_Click(object sender, RoutedEventArgs e)
-                {
-                        //MainWindow main = new MainWindow();
-                        //main.Show();
-                        ChonKhoWindow chonKhoWindow = new ChonKhoWindow();
-                        chonKhoWindow.Show();
-                        this.Close();
-                }
-
-                private void btnNhap_Click(object sender, RoutedEventArgs e)
-                {
-                        NhapKho nhapKho = new NhapKho(MaKho);
-                        nhapKho.Show();
-                        nhapKho.Closed += WindowClosed;
-                }
-                private void WindowClosed(object sender, EventArgs e)
-                  => loadSanPham();
-
-                private void btnXuat_Click(object sender, RoutedEventArgs e)
-                {
-                        XuatKho xuatKho = new XuatKho(MaKho);
-                        xuatKho.Show();
-                        xuatKho.Closed += WindowClosed;
-                }
-
-                private void loadSanPham()
-                {
-                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-                        {
-                                using (SqlConnection connection = new SqlConnection(strCon))
-                                {
-                                        connection.Open();
-                                        using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamTrongKho", connection))
-                                        {
-                                                command.CommandType = CommandType.StoredProcedure;
-                                                command.Parameters.AddWithValue("@maKho", MaKho);
-                                                SqlDataReader reader = command.ExecuteReader();
-                                                int ID = 1;
-                                                lstSP.Items.Clear();
-                                                while (reader.Read())
-                                                {
-
-                                                        listSP listSP = new listSP();
-                                                        listSP.lblID.Content = ID;
-                                                        listSP.lblMaSP.Content = reader["maSP"];
-                                                        listSP.lblTenSP.Content = reader["tenSP"];
-                                                        listSP.lblSL.Content = reader["soLuong"];
-                                                        lstSP.Items.Add(listSP);
-                                                        ID++;
-                                                }
-                                        }
-                                }
-                        }
-                }
-                private void MoKetNoi()
-                {
-                        try
-                        {
-                                if (sqlcon == null)
-                                {
-                                        sqlcon = new SqlConnection(strCon);
-                                }
-                                sqlcon = new SqlConnection(strCon);
-                                if (sqlcon.State == ConnectionState.Closed)
-                                {
-                                        sqlcon.Open();
-                                        //MessageBox.Show("Ket noi thanh cong");
-                                        loadSanPham();
-                                }
-                        }
-                        catch (Exception ex)
-                        {
-                                MessageBox.Show(ex.Message);
-
-                        }
-                }
-
+            InitializeComponent();
+            MaKho = maKho;
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            //MainWindow main = new MainWindow();
+            //main.Show();
+            ChonKhoWindow chonKhoWindow = new ChonKhoWindow();
+            chonKhoWindow.Show();
+            this.Close();
+        }
+
+        private void btnNhap_Click(object sender, RoutedEventArgs e)
+        {
+            NhapKho nhapKho = new NhapKho(MaKho);
+            nhapKho.Show();
+            nhapKho.Closed += WindowClosed;
+        }
+        private void WindowClosed(object sender, EventArgs e)
+          => loadSanPham();
+
+        private void btnXuat_Click(object sender, RoutedEventArgs e)
+        {
+            XuatKho xuatKho = new XuatKho(MaKho);
+            xuatKho.Show();
+            xuatKho.Closed += WindowClosed;
+        }
+
+        private void loadSanPham()
+        {
+            using (SqlConnection connection = DBConnection.connect())
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("proc_LayHetSanPhamTrongKho", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@maKho", MaKho);
+                    SqlDataReader reader = command.ExecuteReader();
+                    int ID = 1;
+                    lstSP.Items.Clear();
+                    while (reader.Read())
+                    {
+
+                        listSP listSP = new listSP();
+                        listSP.lblID.Content = ID;
+                        listSP.lblMaSP.Content = reader["maSP"];
+                        listSP.lblTenSP.Content = reader["tenSP"];
+                        listSP.lblSL.Content = reader["soLuong"];
+                        lstSP.Items.Add(listSP);
+                        ID++;
+                    }
+                }
+            }
+        }
+    }
 }

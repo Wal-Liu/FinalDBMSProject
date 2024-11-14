@@ -23,8 +23,6 @@ namespace WpfApp1
     /// </summary>
     public partial class HoaDonWindow : Window
     {
-        string strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
 
         private int MaCH;
         private List<HoaDon> listHoaDon;
@@ -33,31 +31,8 @@ namespace WpfApp1
             MaCH = maCH;
             this.listHoaDon = list;
             InitializeComponent();
-            MoKetNoi();
             loadHoaDon();
             tinhTien();
-        }
-
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
-                }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
         }
 
         private void btnXuatHoaDon_Click(object sender, RoutedEventArgs e)
@@ -66,31 +41,26 @@ namespace WpfApp1
             {
                 string maSP = hoaDon.lblMaSP.Content.ToString();
                 int soLuong = int.Parse(hoaDon.tbxSoLuong.Text);
-                if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                using (SqlCommand command = new SqlCommand("proc_BanSPTuCH", DBConnection.connect()))
                 {
-                    using (SqlCommand command = new SqlCommand("proc_BanSPTuCH", sqlcon))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@maSP", maSP);
-                        command.Parameters.AddWithValue("@maCH", MaCH);
-                        command.Parameters.AddWithValue("@soLuong", soLuong);
-                        int rowsAffected = command.ExecuteNonQuery();
-                        MessageBox.Show($"{rowsAffected} rows affected.");
-                    }
-
-
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@maSP", maSP);
+                    command.Parameters.AddWithValue("@maCH", MaCH);
+                    command.Parameters.AddWithValue("@soLuong", soLuong);
+                    int rowsAffected = command.ExecuteNonQuery();
+                    MessageBox.Show($"{rowsAffected} rows affected.");
                 }
+
+
             }
         }
 
         private int giaTienMoiSanPham(string maSP, string SL)
         {
             int thanhtien = 0;
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
-                    using (SqlCommand command = new SqlCommand("SELECT dbo.func_giaHoaDon(" + maSP + ", " + SL + ")", sqlcon))
+                    using (SqlCommand command = new SqlCommand("SELECT dbo.func_giaHoaDon(" + maSP + ", " + SL + ")", connection))
                     {
                         //command.CommandType = CommandType.StoredProcedure;
                         //command.Parameters.AddWithValue("@maSP", int.Parse(maSP));
@@ -101,7 +71,6 @@ namespace WpfApp1
                         //MessageBox.Show(thanhtien.ToString()); 
 
                     }
-                }
             }
             //MessageBox.Show(thanhtien.ToString());
             return thanhtien;

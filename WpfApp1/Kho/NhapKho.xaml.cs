@@ -21,14 +21,11 @@ namespace WpfApp1
     /// </summary>
     public partial class NhapKho : Window
     {
-        string strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
         private int MaKho;
         public NhapKho(int maKho)
         {
             InitializeComponent();
             MaKho = maKho;
-            MoKetNoi();
         }
 
         private void btnNhapHang_Click(object sender, RoutedEventArgs e)
@@ -48,9 +45,9 @@ namespace WpfApp1
                     int soLuong = int.Parse(txtSoLuong.Text);
 
                     bool successful = false;
-                    using (SqlConnection connection = new SqlConnection(strCon))
+                    using (SqlConnection connection = DBConnection.connect())
                     {
-                        connection.Open();
+                        connection.Open(); 
                         using (SqlCommand command = new SqlCommand("proc_ThemSPVaoKho", connection))
                         {
                             command.CommandType = CommandType.StoredProcedure;
@@ -81,52 +78,7 @@ namespace WpfApp1
 
         }
 
-        private void loadSanPham()
-        {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand("proc_LayHetSanPham", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            ComboBoxItem comboBoxItem = new ComboBoxItem();
-                            comboBoxItem.Content = reader["tenSP"].ToString();
-                            comboBoxItem.Tag = reader["maSP"].ToString();
-                            cbbSanPham.Items.Add(comboBoxItem);
-                        }
-                    }
-                }
-            }
-        }
 
-
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
-                }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                    loadSanPham();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-            }
-        }
         static bool CheckIfOnlyNumbers(string str)
         {
             foreach (char c in str)

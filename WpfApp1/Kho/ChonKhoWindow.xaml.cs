@@ -22,18 +22,15 @@ namespace WpfApp1.Kho
     /// </summary>
     public partial class ChonKhoWindow : Window
     {
-        string strCon = Globals.strcon;
-        SqlConnection sqlcon = null;
         public ChonKhoWindow()
         {
             InitializeComponent();
-            MoKetNoi();
+            loadKho(); 
         }
+
         private void loadKho()
         {
-            if (sqlcon != null && sqlcon.State == ConnectionState.Open)
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = DBConnection.connect())
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("proc_LayHetKho", connection))
@@ -50,30 +47,8 @@ namespace WpfApp1.Kho
                         }
                     }
                 }
-            }
         }
-        private void MoKetNoi()
-        {
-            try
-            {
-                if (sqlcon == null)
-                {
-                    sqlcon = new SqlConnection(strCon);
-                }
-                sqlcon = new SqlConnection(strCon);
-                if (sqlcon.State == ConnectionState.Closed)
-                {
-                    sqlcon.Open();
-                    //MessageBox.Show("Ket noi thanh cong");
-                    loadKho();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
 
-            }
-        }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {

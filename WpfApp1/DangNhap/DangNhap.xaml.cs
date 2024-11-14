@@ -15,21 +15,31 @@ using WpfApp1.Admin;
 
 namespace WpfApp1.DangNhap
 {
-        /// <summary>
-        /// Interaction logic for DangNhap.xaml
-        /// </summary>
-        public partial class DangNhap : Window
+    /// <summary>
+    /// Interaction logic for DangNhap.xaml
+    /// </summary>
+    public partial class DangNhap : Window
+    {
+        public DangNhap()
         {
-                public DangNhap()
-                {
-                        InitializeComponent();
-                }
-
-                private void btnGui_Click(object sender, RoutedEventArgs e)
-                {
-                        admin adminp = new admin();
-                        adminp.Show();
-
-                }
+            InitializeComponent();
         }
+
+        private void btnGui_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string username = txbTenDangNhap.Text;
+                string password = txbMatKhau.Text; 
+                DBConnection.login(username, password);
+                MessageBox.Show("Dang Nhap Thanh Cong"); 
+                admin admin = new admin();
+                admin.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Dang Nhap That Bai: " + ex.Message);
+            }
+        }
+    }
 }
