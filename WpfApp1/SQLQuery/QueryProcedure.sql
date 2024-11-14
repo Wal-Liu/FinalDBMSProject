@@ -237,6 +237,14 @@ begin
 end
 go
 
+--Tai Khoan--
+create proc proc_LayHetTaiKhoan
+as 
+begin
+	select * from TaiKhoan
+end
+go
+
 
 --Kho--
 DROP PROCEDURE proc_LayHetKho
@@ -263,5 +271,10 @@ DROP PROCEDURE proc_LayHetLoaiSP
 DROP PROCEDURE proc_ThemLoaiSP 
 DROP PROCEDURE proc_SuaLoaiSanPham
 drop function func_LayTenLoaiSP
+
+--Tai Khoan--
+drop procedure proc_LayHetTaiKhoan
+
+
 GO
 
