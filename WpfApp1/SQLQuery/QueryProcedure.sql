@@ -48,7 +48,7 @@ begin
 end
 go
 
-create proc proc_LaySanPham 5
+create proc proc_LaySanPham
 	@maSP int
 as 
 begin

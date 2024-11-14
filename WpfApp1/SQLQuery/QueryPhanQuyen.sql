@@ -63,7 +63,8 @@ GO
 GRANT INSERT, DELETE, UPDATE ON LoaiSP TO QuanLy
 GO
 
-EXEC sp_addrolemember 'db_owner', 'admin'
+EXEC sp_addsrvrolemember 'admin', 'sysadmin'
+
 
 -- Thêm các user ql01, ql02, và ql03 vào role QuanLy
 EXEC sp_addrolemember 'QuanLy', 'ql01'
