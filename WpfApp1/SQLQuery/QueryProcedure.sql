@@ -218,21 +218,13 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE proc_XoaLoaiSP
-    @maLoaiSP NVARCHAR
-AS
-BEGIN 
-    DELETE FROM LoaiSP 
-    WHERE maLoaiSP = @maLoaiSP
-END
-GO
 
 CREATE PROCEDURE proc_SuaLoaiSanPham
     @maloaiSP INT,
     @tenloaiSP NVARCHAR(100)
 AS 
 BEGIN 
-    UPDATE LoaiSanPham
+    UPDATE LoaiSP
     SET tenLoaiSP = @tenLoaiSP
     WHERE maLoaiSP = @maLoaiSP
 END 
@@ -242,6 +234,14 @@ create proc proc_LayHetLoaiSP
 as 
 begin
 	select * from LoaiSP
+end
+go
+
+--Tai Khoan--
+create proc proc_LayHetTaiKhoan
+as 
+begin
+	select * from TaiKhoan
 end
 go
 
@@ -268,9 +268,13 @@ DROP PROCEDURE proc_SuaSanPham
 DROP PROCEDURE proc_LaySanPham
 DROP PROCEDURE proc_LayHetSanPham 
 DROP PROCEDURE proc_LayHetLoaiSP 
-DROP PROCEDURE proc_XoaLoaiSP
 DROP PROCEDURE proc_ThemLoaiSP 
 DROP PROCEDURE proc_SuaLoaiSanPham
 drop function func_LayTenLoaiSP
+
+--Tai Khoan--
+drop procedure proc_LayHetTaiKhoan
+
+
 GO
 
