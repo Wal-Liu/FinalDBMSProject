@@ -63,6 +63,7 @@ GO
 GRANT INSERT, DELETE, UPDATE ON LoaiSP TO QuanLy
 GO
 
+
 EXEC sp_addrolemember 'db_owner', 'admin'
 
 -- Thêm các user ql01, ql02, và ql03 vào role QuanLy
@@ -76,6 +77,8 @@ EXEC sp_addrolemember 'NhanVien', 'nv01'
 EXEC sp_addrolemember 'NhanVien', 'nv02'
 EXEC sp_addrolemember 'NhanVien', 'nv03'
 GO
+
+
 
 
 DROP ROLE NhanVien

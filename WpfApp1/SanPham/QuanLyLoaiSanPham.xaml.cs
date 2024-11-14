@@ -77,34 +77,17 @@ namespace WpfApp1.SanPham
                                 MaLoaiSPDuocChon = maLoaiSP;
                         }
                 }
-
-                private void btnXoa_Click(object sender, RoutedEventArgs e)
-                {
-                        if (lstLoaiSP.SelectedIndex < 0)
-                        {
-                                MessageBox.Show("vui lòng chọn 1 loại Sản Phẩm");
-                                return;
-                        }
-                        using (SqlConnection connection = DBConnection.connect())
-                        {
-                                connection.Open();
-                                using (SqlCommand command = new SqlCommand("proc_XoaLoaiSP", connection))
-                                {
-                                        command.CommandType = CommandType.StoredProcedure;
-                                        command.Parameters.AddWithValue("@maLoaiSP", MaLoaiSPDuocChon);
-                                        SqlDataReader reader = command.ExecuteReader();
-                                }
-                        }
-                        load();
-
-                }
-
                 private void btnThem_Click(object sender, RoutedEventArgs e)
                 {
                         string tenLoaiSP = txbTenLoaiSP.Text;
                         if (checkExit(tenLoaiSP) == true)
                         {
                                 MessageBox.Show("Loại sản phẩm đã tồn tại!");
+                                return;
+                        }
+                        if (tenLoaiSP.Length == 0)
+                        {
+                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                                 return;
                         }
                         using (SqlConnection connection = DBConnection.connect())
@@ -131,6 +114,7 @@ namespace WpfApp1.SanPham
                 private void btnSua_Click(object sender, RoutedEventArgs e)
                 {
                         string tenLoaiSP = txbTenLoaiSP.Text;
+                        MessageBox.Show(tenLoaiSP.Length.ToString());
                         if (checkExit(tenLoaiSP) == true)
                         {
                                 MessageBox.Show("Loại sản phẩm đã tồn tại!");
@@ -141,19 +125,47 @@ namespace WpfApp1.SanPham
                                 MessageBox.Show("vui lòng chọn 1 loại Sản Phẩm");
                                 return;
                         }
-                        using (SqlConnection connection = DBConnection.connect())
+                        if(tenLoaiSP.Length == 0)
                         {
-                                connection.Open();
-                                using (SqlCommand command = new SqlCommand("proc_SuaLoaiSP", connection))
-                                {
-                                        command.CommandType = CommandType.StoredProcedure;
-                                        command.Parameters.AddWithValue("@maLoaiSP", MaLoaiSPDuocChon);
-                                        command.Parameters.AddWithValue("@tenLoaiSP", tenLoaiSP);
-
-                                        SqlDataReader reader = command.ExecuteReader();
-                                }
+                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                                return;
                         }
-                        load();
+
+                        try
+                        {
+                                using (SqlConnection connection = DBConnection.connect())
+                                {
+                                        connection.Open();
+
+                                        using (SqlCommand command = new SqlCommand("proc_SuaLoaiSanPham", connection))
+                                        {
+                                                command.CommandType = CommandType.StoredProcedure;
+                                                command.Parameters.AddWithValue("@maLoaiSP", MaLoaiSPDuocChon);
+                                                command.Parameters.AddWithValue("@tenLoaiSP", tenLoaiSP);
+
+                                                // Sử dụng ExecuteNonQuery() nếu thủ tục lưu trữ không trả về dữ liệu
+                                                int rowsAffected = command.ExecuteNonQuery();
+
+                                                // Kiểm tra xem có bao nhiêu dòng bị ảnh hưởng
+                                                if (rowsAffected > 0)
+                                                {
+                                                        MessageBox.Show("Cập nhật loại sản phẩm thành công!");
+                                                }
+                                                else
+                                                {
+                                                        MessageBox.Show("Cập nhật không thành công. Vui lòng kiểm tra lại.");
+                                                }
+                                        }
+                                }
+
+                                // Tải lại dữ liệu sau khi thực hiện cập nhật
+                                load();
+                        }
+                        catch (Exception ex)
+                        {
+                                // Xử lý ngoại lệ và hiển thị thông báo lỗi
+                                MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
+                        }
                 }
         }
 }

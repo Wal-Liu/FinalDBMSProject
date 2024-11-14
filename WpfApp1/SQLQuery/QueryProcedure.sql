@@ -48,7 +48,7 @@ begin
 end
 go
 
-create proc proc_LaySanPham 5
+create proc proc_LaySanPham
 	@maSP int
 as 
 begin
@@ -218,21 +218,13 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE proc_XoaLoaiSP
-    @maLoaiSP NVARCHAR
-AS
-BEGIN 
-    DELETE FROM LoaiSP 
-    WHERE maLoaiSP = @maLoaiSP
-END
-GO
 
 CREATE PROCEDURE proc_SuaLoaiSanPham
     @maloaiSP INT,
     @tenloaiSP NVARCHAR(100)
 AS 
 BEGIN 
-    UPDATE LoaiSanPham
+    UPDATE LoaiSP
     SET tenLoaiSP = @tenLoaiSP
     WHERE maLoaiSP = @maLoaiSP
 END 
@@ -268,9 +260,8 @@ DROP PROCEDURE proc_SuaSanPham
 DROP PROCEDURE proc_LaySanPham
 DROP PROCEDURE proc_LayHetSanPham 
 DROP PROCEDURE proc_LayHetLoaiSP 
-DROP PROCEDURE proc_XoaLoaiSP
 DROP PROCEDURE proc_ThemLoaiSP 
-DROP PROCEDURE proc_SualLoaiSanPham
+DROP PROCEDURE proc_SuaLoaiSanPham
 drop function func_LayTenLoaiSP
 GO
 
