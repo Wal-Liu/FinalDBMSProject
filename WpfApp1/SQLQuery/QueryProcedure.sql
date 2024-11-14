@@ -241,9 +241,50 @@ go
 create proc proc_LayHetTaiKhoan
 as 
 begin
-	select * from TaiKhoan
+	select * from sysusers
 end
 go
+
+CREATE PROCEDURE proc_TaoTaiKhoan
+    @tenTaiKhoan NVARCHAR(100),
+    @MatKhau NVARCHAR(100),
+    @Role NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @SQL NVARCHAR(MAX);
+    DECLARE @DatabaseName NVARCHAR(100) = 'QLSanPham'; -- Specify your database name here
+
+    BEGIN TRY
+        -- Create the login
+        SET @SQL = 'CREATE LOGIN [' + @tenTaiKhoan + '] WITH PASSWORD = ''' + @MatKhau + ''';';
+        EXEC sp_executesql @SQL;
+
+        -- Create the user in the specified database
+        SET @SQL = 'USE [' + @DatabaseName + ']; CREATE USER [' + @tenTaiKhoan + '] FOR LOGIN [' + @tenTaiKhoan + '];';
+        EXEC sp_executesql @SQL;
+
+        -- Check if the role is 'admin'
+        IF @Role = 'admin'
+        BEGIN
+            -- Add the user to the sysadmin server role
+            SET @SQL = 'EXEC sp_addsrvrolemember ''' + @tenTaiKhoan + ''', ''sysadmin'';';
+            EXEC sp_executesql @SQL;
+        END
+        ELSE
+        BEGIN
+            -- Add the user to the specified database role
+            SET @SQL = 'USE [' + @DatabaseName + ']; EXEC sp_addrolemember ''' + @Role + ''', ''' + @tenTaiKhoan + ''';';
+            EXEC sp_executesql @SQL;
+        END
+
+        PRINT 'User , login, and role added successfully.';
+    END TRY
+    BEGIN CATCH
+        PRINT 'Error occurred: ' + ERROR_MESSAGE();
+    END CATCH
+END
 
 
 --Kho--
@@ -274,7 +315,6 @@ drop function func_LayTenLoaiSP
 
 --Tai Khoan--
 drop procedure proc_LayHetTaiKhoan
-
-
+drop procedure proc_TaoTaiKhoan
 GO
 

@@ -71,7 +71,7 @@ CREATE TABLE TaiKhoan
 ( 
 	tenTaiKhoan VARCHAR(100) NOT NULL UNIQUE, 
 	matKhau VARCHAR(1000) NOT NULL,
-	viTri NVARCHAR(1000) NOT NULL CHECK (viTri in ('quanly', 'nhanvien')),
+	viTri NVARCHAR(1000) NOT NULL CHECK (viTri in ('QuanLy', 'NhanVien')),
 	PRIMARY KEY(tenTaiKhoan),
 )
 GO

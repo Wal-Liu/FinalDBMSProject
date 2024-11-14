@@ -30,6 +30,5 @@ VALUES ('Cua Hang Cua Hang', 'Nguyen Xi', '12334')
 
 SELECT * FROM CuaHang
 SELECT * FROM KHO
-
 SELECT * FROM SanPham
 

@@ -24,7 +24,7 @@ namespace WpfApp1.CuaHang
         public ChonCuaHang()
         {
             InitializeComponent();
-                        loadCuaHang();
+            loadCuaHang();
         }
         private void loadCuaHang()
         {
@@ -34,14 +34,21 @@ namespace WpfApp1.CuaHang
                 using (SqlCommand command = new SqlCommand("proc_LayHetCuaHang", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
+                    try
                     {
-                        ComboBoxItem comboBoxItem = new ComboBoxItem();
-                        comboBoxItem.Content = reader["tenCH"].ToString();
-                        comboBoxItem.Tag = reader["maCH"].ToString();
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            ComboBoxItem comboBoxItem = new ComboBoxItem();
+                            comboBoxItem.Content = reader["tenCH"].ToString();
+                            comboBoxItem.Tag = reader["maCH"].ToString();
 
-                        cbbCuaHang.Items.Add(comboBoxItem);
+                            cbbCuaHang.Items.Add(comboBoxItem);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("That Bai: " + ex); 
                     }
                 }
             }
