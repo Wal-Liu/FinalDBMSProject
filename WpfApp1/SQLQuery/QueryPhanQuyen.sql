@@ -78,10 +78,6 @@ EXEC sp_addrolemember 'NhanVien', 'nv02'
 EXEC sp_addrolemember 'NhanVien', 'nv03'
 GO
 
-
-DROP ROLE NhanVien
-DROP ROLE QuanLy
-
 DROP USER ql01
 DROP USER ql02
 DROP USER ql03

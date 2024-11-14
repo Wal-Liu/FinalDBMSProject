@@ -270,7 +270,7 @@ DROP PROCEDURE proc_LayHetSanPham
 DROP PROCEDURE proc_LayHetLoaiSP 
 DROP PROCEDURE proc_XoaLoaiSP
 DROP PROCEDURE proc_ThemLoaiSP 
-DROP PROCEDURE proc_SualLoaiSanPham
+DROP PROCEDURE proc_SuaLoaiSanPham
 drop function func_LayTenLoaiSP
 GO
 
