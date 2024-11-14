@@ -29,7 +29,7 @@ namespace WpfApp1
         {
             InitializeComponent();
             MaKho = maKho;
-                        loadSanPham();
+            loadSanPham();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -71,7 +71,6 @@ namespace WpfApp1
                     lstSP.Items.Clear();
                     while (reader.Read())
                     {
-
                         listSP listSP = new listSP();
                         listSP.lblID.Content = ID;
                         listSP.lblMaSP.Content = reader["maSP"];

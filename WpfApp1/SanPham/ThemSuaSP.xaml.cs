@@ -117,7 +117,6 @@ namespace WpfApp1.SanPham
                                         command.CommandType = CommandType.StoredProcedure;
                                         command.Parameters.AddWithValue("@maSP", maSP);
                                         SqlDataReader reader = command.ExecuteReader();
-                                        MessageBox.Show(maSP);
                                         while (reader.Read())
                                         {
                                                 
@@ -144,14 +143,12 @@ namespace WpfApp1.SanPham
                 }
                 private void SelectComboBoxItemByTag(string tagToSelect)
                 {
-                        MessageBox.Show(tagToSelect);
                         foreach (ComboBoxItem item in cbbLoaiSP.Items)
                         {
                                 if (item.Content.ToString() == tagToSelect)
                                 {
                                         cbbLoaiSP.SelectedItem = item;
                                         string maloaiSP = (cbbLoaiSP.SelectedItem as ComboBoxItem).Tag.ToString();
-                                        MessageBox.Show(maloaiSP);
                                         break; 
                                 }
                         }

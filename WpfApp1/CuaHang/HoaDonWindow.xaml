@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="HoaDonWindow" Height="450" Width="500">
-        <Grid>
+        <Grid Height="450" Width="500">
                 <ListBox x:Name="lstHoaDon" Margin="10,55,10,179" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="450" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Label Content="Tổng tiền: " HorizontalAlignment="Left" Margin="160,267,0,0" VerticalAlignment="Top" FontSize="20"/>
                 <Label x:Name="lblTongTien" Content="100000000" HorizontalAlignment="Left" Margin="280,267,0,0" VerticalAlignment="Top" FontSize="20" Width="160"/>

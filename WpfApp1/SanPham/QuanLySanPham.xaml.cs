@@ -31,6 +31,8 @@ namespace WpfApp1.SanPham
 
                 }
                 private int MaSPDuocChon = -1;
+                private void WindowClosed(object sender, EventArgs e)
+                => loadSanPham();
                 private void ListView_SelectionChanged()
                 {
                         // Kiểm tra nếu có item nào được
@@ -86,7 +88,8 @@ namespace WpfApp1.SanPham
                 {
                         ThemSuaSP themSuaSP = new ThemSuaSP();
                         themSuaSP.Show();
-                        loadSanPham();
+                        themSuaSP.Closed += WindowClosed; 
+                        
                 }
 
                 private void btnSua_Click(object sender, RoutedEventArgs e)
@@ -96,8 +99,8 @@ namespace WpfApp1.SanPham
 
                         ThemSuaSP themSuaSP = new ThemSuaSP(MaSPDuocChon);
                         themSuaSP.Show();
-
-                        loadSanPham();
+                        themSuaSP.Closed += WindowClosed;
+                        
                 }
 
                 private void btnXoa_Click(object sender, RoutedEventArgs e)

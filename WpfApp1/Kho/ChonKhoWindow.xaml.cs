@@ -37,6 +37,7 @@ namespace WpfApp1.Kho
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         SqlDataReader reader = command.ExecuteReader();
+                        cbbKho.Items.Clear();
                         while (reader.Read())
                         {
                             ComboBoxItem comboBoxItem = new ComboBoxItem();

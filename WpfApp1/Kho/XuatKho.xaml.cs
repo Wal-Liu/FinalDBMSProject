@@ -29,6 +29,7 @@ namespace WpfApp1
             InitializeComponent();
             MaKho = maKho;
                         loadSanPham();
+                        loadCuaHang();
         }
         private int SoLuong = 0;
 

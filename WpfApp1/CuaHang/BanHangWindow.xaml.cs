@@ -30,6 +30,7 @@ namespace WpfApp1
         {
             MaCH = maCH;
             InitializeComponent();
+                        loadSanPham();
         }
 
         private void loadSanPham()
@@ -166,7 +167,11 @@ namespace WpfApp1
             }
         }
         private void WindowClosed(object sender, EventArgs e)
-          => loadSanPham();
+                {
+                        loadSanPham();
+                        this.Close();
+
+                }
 
 
         private bool checkExist(String tenSP)
