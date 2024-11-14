@@ -26,6 +26,7 @@ namespace WpfApp1
                 {
                         InitializeComponent();
                         MaKho = maKho;
+                        loadSanPham();
                 }
 
                 private void btnNhapHang_Click(object sender, RoutedEventArgs e)

@@ -28,6 +28,7 @@ namespace WpfApp1
         {
             InitializeComponent();
             MaKho = maKho;
+                        loadSanPham();
         }
         private int SoLuong = 0;
 

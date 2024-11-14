@@ -24,6 +24,7 @@ namespace WpfApp1.CuaHang
         public ChonCuaHang()
         {
             InitializeComponent();
+                        loadCuaHang();
         }
         private void loadCuaHang()
         {

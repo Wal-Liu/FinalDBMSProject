@@ -41,14 +41,14 @@ namespace WpfApp1.SanPham
                         }
                         else
                         {
-                                //string selectedItem = lblList.SelectedIndex.ToString();
 
-                                string selectedItem = lblList.SelectedItem.ToString();
-                                MessageBox.Show("Bạn đã chọn: " + selectedItem);
+                                QuanLySP selectedProduct = lblList.SelectedItem as QuanLySP;
 
+                                // Lấy ID từ Tag
+                                string maSP = selectedProduct.lblID.Content.ToString(); // Hoặc sử dụng Tag nếu bạn đã lưu ID vào Tag
+                                //MessageBox.Show("Bạn đã chọn: " + maSP);
 
-                                String maSP = (lblList.SelectedItem as QuanLySanPham).Tag.ToString();
-                                MessageBox.Show(maSP);
+                                // Chuyển đổi ID sang int nếu cần
                                 MaSPDuocChon = int.Parse(maSP);
                         }
                 }
@@ -86,6 +86,7 @@ namespace WpfApp1.SanPham
                 {
                         ThemSuaSP themSuaSP = new ThemSuaSP();
                         themSuaSP.Show();
+                        loadSanPham();
                 }
 
                 private void btnSua_Click(object sender, RoutedEventArgs e)
@@ -95,33 +96,26 @@ namespace WpfApp1.SanPham
 
                         ThemSuaSP themSuaSP = new ThemSuaSP(MaSPDuocChon);
                         themSuaSP.Show();
+
+                        loadSanPham();
                 }
 
                 private void btnXoa_Click(object sender, RoutedEventArgs e)
                 {
                         ListView_SelectionChanged();
                         if (MaSPDuocChon == -1) return;
-
-                        bool successful = false;
                         using (SqlConnection connection = DBConnection.connect())
                         {
                                 connection.Open();
                                 using (SqlCommand command = new SqlCommand("proc_XoaSanPham", connection))
                                 {
                                         command.CommandType = CommandType.StoredProcedure;
-                                        command.Parameters.AddWithValue("@tenSP", MaSPDuocChon);
+                                        command.Parameters.AddWithValue("@maSP", MaSPDuocChon);
                                         SqlDataReader reader = command.ExecuteReader();
-                                        int rowsAffected = command.ExecuteNonQuery();
-                                        if (rowsAffected > 0) successful = true;
                                 }
                         }
-                        if (successful == true)
-                        {
-                                MessageBox.Show("Xoá thành công");
-                                this.Close();
-                        }
-                        else
-                                MessageBox.Show("vui lòng thử lại");
+
+                        loadSanPham();
                 }
 
                 private void btnLoaiSP_Click(object sender, RoutedEventArgs e)

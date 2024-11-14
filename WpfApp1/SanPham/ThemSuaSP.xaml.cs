@@ -32,12 +32,16 @@ namespace WpfApp1.SanPham
                         InitializeComponent();
                         this.sanPhamId = sanPhamId;
                         load();
+                        if(sanPhamId != null)
+                        {
+                                LoadSuaSP(sanPhamId.ToString());
+                        }
                 }
 
                 private void btnXacNhan_Click(object sender, RoutedEventArgs e)
                 {
                         string tenSP = txbTenSP.Text;
-                        string dongia = txbDonGia.Text; 
+                        string dongia = txbDonGia.Text;
                         string mota = txbMoTa.Text;
                         string maloaiSP = (cbbLoaiSP.SelectedItem as ComboBoxItem).Tag.ToString();
 
@@ -45,7 +49,7 @@ namespace WpfApp1.SanPham
                         using (SqlConnection connection = DBConnection.connect())
                         {
                                 connection.Open();
-                                if(sanPhamId == null)
+                                if (sanPhamId == null)
                                 {
                                         using (SqlCommand command = new SqlCommand("proc_ThemSanPham", connection))
                                         {
@@ -54,7 +58,7 @@ namespace WpfApp1.SanPham
                                                 command.Parameters.AddWithValue("@donGia", dongia);
                                                 command.Parameters.AddWithValue("@moTa", mota);
                                                 command.Parameters.AddWithValue("@maLoaiSP", maloaiSP);
-                                                int rowsAffected = command.ExecuteNonQuery(); 
+                                                int rowsAffected = command.ExecuteNonQuery();
                                                 if (rowsAffected > 0) successful = true;
                                         }
                                 }
@@ -100,6 +104,55 @@ namespace WpfApp1.SanPham
                                                 item.Tag = reader["maLoaiSP"].ToString();
                                                 cbbLoaiSP.Items.Add(item);
                                         }
+                                }
+                        }
+                }
+                private void LoadSuaSP(string maSP)
+                {
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("proc_LaySanPham", connection))
+                                {
+                                        command.CommandType = CommandType.StoredProcedure;
+                                        command.Parameters.AddWithValue("@maSP", maSP);
+                                        SqlDataReader reader = command.ExecuteReader();
+                                        MessageBox.Show(maSP);
+                                        while (reader.Read())
+                                        {
+                                                
+                                                txbTenSP.Text = reader["tenSP"].ToString();
+                                                txbDonGia.Text = reader["donGia"].ToString();
+                                                txbMoTa.Text = reader["moTa"].ToString();
+                                                string LoaiSP = MaLoaiSPToLoaiSP(reader["maLoaiSP"].ToString());
+                                                SelectComboBoxItemByTag(LoaiSP);
+                                        }
+                                }
+                        }
+                }
+                private string MaLoaiSPToLoaiSP(string maLoaiSP)
+                {
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("SELECT dbo.func_LayTenLoaiSP(" + maLoaiSP + ")", connection))
+                                {
+                                        var tenLoaiSP = command.ExecuteScalar().ToString();
+                                        return tenLoaiSP;
+                                }
+                        }
+                }
+                private void SelectComboBoxItemByTag(string tagToSelect)
+                {
+                        MessageBox.Show(tagToSelect);
+                        foreach (ComboBoxItem item in cbbLoaiSP.Items)
+                        {
+                                if (item.Content.ToString() == tagToSelect)
+                                {
+                                        cbbLoaiSP.SelectedItem = item;
+                                        string maloaiSP = (cbbLoaiSP.SelectedItem as ComboBoxItem).Tag.ToString();
+                                        MessageBox.Show(maloaiSP);
+                                        break; 
                                 }
                         }
                 }

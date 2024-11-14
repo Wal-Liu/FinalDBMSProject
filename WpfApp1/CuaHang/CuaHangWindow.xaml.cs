@@ -28,6 +28,7 @@ namespace WpfApp1
                 {
                         MaCH = maCH;
                         InitializeComponent();
+                        loadSanPham();
                 }
                 private void btnBack_Click(object sender, RoutedEventArgs e)
                 {

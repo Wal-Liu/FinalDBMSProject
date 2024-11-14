@@ -29,6 +29,7 @@ namespace WpfApp1
         {
             InitializeComponent();
             MaKho = maKho;
+                        loadSanPham();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

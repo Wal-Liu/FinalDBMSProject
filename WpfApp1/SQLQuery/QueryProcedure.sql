@@ -48,6 +48,15 @@ begin
 end
 go
 
+create proc proc_LaySanPham 5
+	@maSP int
+as 
+begin
+	select * from SanPham
+	where maSP = @maSP
+end
+go
+
 
 CREATE FUNCTION func_LayTenLoaiSP 
 (
@@ -256,6 +265,7 @@ DROP FUNCTION func_LaySoLuongSanPhamTrongCH
 DROP PROCEDURE proc_ThemSanPham 
 DROP PROCEDURE proc_XoaSanPham
 DROP PROCEDURE proc_SuaSanPham
+DROP PROCEDURE proc_LaySanPham
 DROP PROCEDURE proc_LayHetSanPham 
 DROP PROCEDURE proc_LayHetLoaiSP 
 DROP PROCEDURE proc_XoaLoaiSP
