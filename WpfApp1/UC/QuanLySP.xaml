@@ -10,9 +10,8 @@
                 <Label x:Name="lblID" Content="ID" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label x:Name="lblTenSP" Content="Ten SP" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" Height="50" Width="150" VerticalContentAlignment="Center"/>
                 <Label x:Name="lblDonGia" Content="Don Gia" HorizontalAlignment="Left" Margin="200,0,0,0" VerticalAlignment="Center" Height="50" Width="100" VerticalContentAlignment="Center"/>
-                <ListView x:Name="lblMoTa" Width="150" Margin="400,0,0,0" Height="50" HorizontalAlignment="Left"/>
                 <Label x:Name="lblLoaiSP" Content="Loai sp" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" Height="50" Width="100" VerticalContentAlignment="Center"/>
-                <Image x:Name="img" HorizontalAlignment="Right" Height="50" Margin="538,0,0,0" Width="50" MaxWidth="50" MaxHeight="50"/>
+                <ListView x:Name="lblMoTa" Width="200" Margin="400,0,0,0" Height="50" HorizontalAlignment="Left"/>
 
 
 
