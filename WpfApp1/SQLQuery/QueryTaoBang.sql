@@ -4,7 +4,6 @@ GO
 USE QLSanPham 
 GO
 
-
 CREATE TABLE LoaiSP
 (
 	maLoaiSP INT NOT NULL IDENTITY(1, 1),

@@ -27,52 +27,61 @@ namespace WpfApp1.SanPham
                 public QuanLySanPham()
                 {
                         InitializeComponent();
-                        
-                        lblList.Items.Add("Item 1");
-                        lblList.Items.Add("Item 2");
-                        lblList.Items.Add("Item 3");
-
-                        lblList.SelectionChanged += ListView_SelectionChanged;
+                        loadSanPham();
 
                 }
-                private void ListView_SelectionChanged(object sender, EventArgs e)
+                private int MaSPDuocChon = -1;
+                private void ListView_SelectionChanged()
                 {
-                        // Kiểm tra nếu có item nào được chọn
-                        if (lblList.SelectedItems != null)
+                        // Kiểm tra nếu có item nào được
+                        if (lblList.SelectedIndex < 0)
                         {
-                                // Lấy item được chọn
+                                MessageBox.Show("vui lòng chọn 1 sản phẩm");
+                                return;
+                        }
+                        else
+                        {
+                                //string selectedItem = lblList.SelectedIndex.ToString();
+
                                 string selectedItem = lblList.SelectedItem.ToString();
                                 MessageBox.Show("Bạn đã chọn: " + selectedItem);
+
+
+                                String maSP = (lblList.SelectedItem as QuanLySanPham).Tag.ToString();
+                                MessageBox.Show(maSP);
+                                MaSPDuocChon = int.Parse(maSP);
                         }
                 }
 
                 private void loadSanPham()
                 {
-                        if (sqlcon != null && sqlcon.State == ConnectionState.Open)
+                        using (SqlConnection connection = DBConnection.connect())
                         {
-                                using (SqlConnection connection = new SqlConnection(strCon))
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("proc_LayHetSanPham", connection))
                                 {
-                                        connection.Open();
-                                        using (SqlCommand command = new SqlCommand("proc_LayHetSanPham", connection))
+                                        command.CommandType = CommandType.StoredProcedure;
+                                        SqlDataReader reader = command.ExecuteReader();
+                                        lblList.Items.Clear();
+                                        while (reader.Read())
                                         {
-                                                command.CommandType = CommandType.StoredProcedure;
-                                                SqlDataReader reader = command.ExecuteReader();
-                                                int ID = 1;
-                                                lblList.Items.Clear();
-                                                while (reader.Read())
-                                                {
-                                                        QuanLySP quanLySP = new QuanLySP();
-                                                        quanlySP.lblID.Content = ID;
-                                                        quanLySP.lblTenSP.Content = reader["tenSP"];
-                                                        quanLySP.lblDonGia.Content = reader["donGia"];
-                                                        quanLySP.lblMoTa.Items.Add(reader["moTa"]);
-                                                        quanLySP.lblLoaiSP.Content = MaLoaiSPToLoaiSP(reader["maLoaiSP"].ToString());
-                                                        ID++;
-                                                }
+                                                QuanLySP quanLySP = new QuanLySP();
+                                                quanLySP.lblID.Content = reader["maSP"];
+                                                quanLySP.lblTenSP.Content = reader["tenSP"];
+                                                quanLySP.lblDonGia.Content = reader["donGia"];
+                                                quanLySP.lblMoTa.Items.Add(reader["moTa"]);
+                                                quanLySP.lblLoaiSP.Content = MaLoaiSPToLoaiSP(reader["maLoaiSP"].ToString());
+                                                ListViewItem item = new ListViewItem();
+
+                                                item.Tag = quanLySP.lblID.Content;
+                                                lblList.Items.Add(quanLySP);
                                         }
                                 }
                         }
+                        //lblList.SelectionChanged += ListView_SelectionChanged;
+
                 }
+
                 private void btnThem_Click(object sender, RoutedEventArgs e)
                 {
                         ThemSuaSP themSuaSP = new ThemSuaSP();
@@ -81,13 +90,38 @@ namespace WpfApp1.SanPham
 
                 private void btnSua_Click(object sender, RoutedEventArgs e)
                 {
-                        ThemSuaSP themSuaSP = new ThemSuaSP();
+                        ListView_SelectionChanged();
+                        if (MaSPDuocChon == -1) return;
+
+                        ThemSuaSP themSuaSP = new ThemSuaSP(MaSPDuocChon);
                         themSuaSP.Show();
                 }
 
                 private void btnXoa_Click(object sender, RoutedEventArgs e)
                 {
-                        MessageBox.Show("Xoá");
+                        ListView_SelectionChanged();
+                        if (MaSPDuocChon == -1) return;
+
+                        bool successful = false;
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("proc_XoaSanPham", connection))
+                                {
+                                        command.CommandType = CommandType.StoredProcedure;
+                                        command.Parameters.AddWithValue("@tenSP", MaSPDuocChon);
+                                        SqlDataReader reader = command.ExecuteReader();
+                                        int rowsAffected = command.ExecuteNonQuery();
+                                        if (rowsAffected > 0) successful = true;
+                                }
+                        }
+                        if (successful == true)
+                        {
+                                MessageBox.Show("Xoá thành công");
+                                this.Close();
+                        }
+                        else
+                                MessageBox.Show("vui lòng thử lại");
                 }
 
                 private void btnLoaiSP_Click(object sender, RoutedEventArgs e)
@@ -97,7 +131,15 @@ namespace WpfApp1.SanPham
                 }
                 private string MaLoaiSPToLoaiSP(string maLoaiSP)
                 {
-                        return "chua goi func";
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("SELECT dbo.func_LayTenLoaiSP(" + maLoaiSP + ")", connection))
+                                {
+                                        var tenLoaiSP = command.ExecuteScalar().ToString();
+                                        return tenLoaiSP;
+                                }
+                        }
                 }
         }
 }

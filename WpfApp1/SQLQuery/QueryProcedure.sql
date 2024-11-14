@@ -6,21 +6,20 @@ CREATE PROCEDURE proc_ThemSanPham
     @tenSP NVARCHAR(100), 
 	@donGia INT,
 	@moTa NVARCHAR(1000),
-	@maLoaiSP INT,
-	@duongDanHinhAnh VARCHAR(1000)
+	@maLoaiSP INT
 AS 
 BEGIN 
-    INSERT INTO SanPham (tenSP, donGia, moTa, maLoaiSP, duongDanHinhAnh)
-    VALUES (@tenSP, @donGia, @moTa, @maLoaiSP, @duongDanHinhAnh)
+    INSERT INTO SanPham (tenSP, donGia, moTa, maLoaiSP)
+    VALUES (@tenSP, @donGia, @moTa, @maLoaiSP)
 END 
 GO
 
 CREATE PROCEDURE proc_XoaSanPham
-    @tenSP NVARCHAR(100)
+    @maSP NVARCHAR(100)
 AS 
 BEGIN 
     DELETE FROM SanPham 
-    WHERE tenSP = @tenSP 
+    WHERE maSP = @maSP 
 END 
 GO
 
@@ -30,16 +29,14 @@ CREATE PROCEDURE proc_SuaSanPham
     @tenSP NVARCHAR(100), 
 	@donGia INT,
 	@moTa NVARCHAR(1000),
-	@maLoaiSP INT,
-	@duongDanHinhAnh VARCHAR(1000)
+	@maLoaiSP INT
 AS 
 BEGIN 
     UPDATE SanPham
     SET tenSP = @tenSP,
         donGia = @donGia,
         moTa = @moTa,
-        maLoaiSP = @maLoaiSP, 
-        duongDanHinhAnh = @duongDanHinhAnh 
+        maLoaiSP = @maLoaiSP
     WHERE maSP = @maSP
 END 
 GO
@@ -50,6 +47,24 @@ begin
 	select * from SanPham
 end
 go
+
+
+CREATE FUNCTION func_LayTenLoaiSP 
+(
+    @maLoaiSP INT
+)
+RETURNS NVARCHAR(100)
+AS
+BEGIN
+    DECLARE @tenLoaiSP NVARCHAR(100);
+
+    SELECT @tenLoaiSP = tenLoaiSP
+    FROM LoaiSP
+    WHERE maLoaiSP = @maLoaiSP;
+    RETURN @tenLoaiSP;
+END
+GO
+
 
 -----------------------------------------------------------------------
 --Kho--
@@ -186,7 +201,7 @@ GO
 
 --Loai SP--
 CREATE PROCEDURE proc_ThemLoaiSP
-    @tenLoaiSP NVARCHAR
+    @tenLoaiSP NVARCHAR(100)
 AS
 BEGIN 
     INSERT INTO LoaiSP(tenLoaiSP) 
@@ -202,6 +217,13 @@ BEGIN
     WHERE maLoaiSP = @maLoaiSP
 END
 GO
+
+create proc proc_LayHetLoaiSP
+as 
+begin
+	select * from LoaiSP
+end
+go
 
 
 --Kho--
@@ -224,8 +246,9 @@ DROP PROCEDURE proc_ThemSanPham
 DROP PROCEDURE proc_XoaSanPham
 DROP PROCEDURE proc_SuaSanPham
 DROP PROCEDURE proc_LayHetSanPham 
+DROP PROCEDURE proc_LayHetLoaiSP 
 DROP PROCEDURE proc_XoaLoaiSP
 DROP PROCEDURE proc_ThemLoaiSP 
-
+drop function func_LayTenLoaiSP
 GO
 

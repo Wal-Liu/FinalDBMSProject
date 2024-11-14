@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="QuanLySanPham" Height="450" Width="800">
     <Grid Width="800" Height="450">
-                <ListView x:Name="lblList" Width="600" Height="300" VerticalAlignment="Top" Margin="100,40,100,0"/>
+                <ListView x:Name="lblList" Width="586" Height="300" VerticalAlignment="Top" Margin="100,40,100,0" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
                 <Button x:Name="btnThem" Content="Thêm" HorizontalAlignment="Left" Margin="100,375,0,40" VerticalAlignment="Bottom" Width="100" Height="30" Click="btnThem_Click"/>
                 <Button x:Name="btnSua" Content="Sửa" HorizontalAlignment="Left" Margin="275,0,0,40" VerticalAlignment="Bottom" Width="100" Height="30" Click="btnSua_Click"/>
                 <Button x:Name="btnXoa" Content="Xoá" HorizontalAlignment="Left" Margin="450,0,200,40" VerticalAlignment="Bottom" Width="100" Height="30" Click="btnXoa_Click"/>
