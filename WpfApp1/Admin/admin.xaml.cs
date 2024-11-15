@@ -116,5 +116,19 @@ namespace WpfApp1.Admin
                 }
             }
         }
+
+                private void btnDangXuat_Click(object sender, RoutedEventArgs e)
+                {
+                        try
+                        {
+                                DBConnection.logout();
+                                MessageBox.Show("Đã đăng xuất khỏi hệ thống");
+                                this.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                                MessageBox.Show("Thử Lại: " + ex.Message);
+                        }
+                }
     }
 }

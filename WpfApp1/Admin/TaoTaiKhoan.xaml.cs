@@ -32,7 +32,7 @@ namespace WpfApp1.Admin
             string tentk = txbTenDangNhap.Text;
             string mk = txbMatKhau.Text;
             string vitri = (cbbViTri.SelectedItem as ComboBoxItem).Tag.ToString();
-            MessageBox.Show(vitri);
+
             if (checkExit(tentk) == true)
             {
                 MessageBox.Show("Tài Khoản đã tồn tại!");
@@ -40,7 +40,7 @@ namespace WpfApp1.Admin
             }
             if (tentk.Length == 0)
             {
-                MessageBox.Show("Vui Lòng điền đầy đủ thông tin");
+                MessageBox.Show("Vui Lòng điền đầy đủ thông tin");      
                 return;
             }
             using (SqlConnection connection = DBConnection.connect())
@@ -55,6 +55,8 @@ namespace WpfApp1.Admin
                     try
                     {
                         command.ExecuteNonQuery();
+                        MessageBox.Show("thanh Cong");
+
                     }
                     catch (Exception ex)
                     {
