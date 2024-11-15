@@ -19,103 +19,86 @@ using WpfApp1.SanPham;
 
 namespace WpfApp1.Admin
 {
-    /// <summary>
-    /// Interaction logic for admin.xaml
-    /// </summary>
-    public partial class admin : Window
-    {
-        public admin()
+        /// <summary>
+        /// Interaction logic for admin.xaml
+        /// </summary>
+        public partial class admin : Window
         {
-            InitializeComponent();
-        }
-
-        private void btnTaoTK_Click(object sender, RoutedEventArgs e)
-        {
-            using (SqlConnection connection = DBConnection.connect())
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("proc_LayHetTaiKhoan", connection))
+                public admin()
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                        TaoTaiKhoan taoTaiKhoan = new TaoTaiKhoan();
-                        taoTaiKhoan.Show(); 
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("That Bai: " + ex.Message);
-                    }
+                        InitializeComponent();
                 }
-            }
-        }
 
-        private void btnQuanLyKho_Click(object sender, RoutedEventArgs e)
-        {
-            using (SqlConnection connection = DBConnection.connect())
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("proc_LayHetKho", connection))
+                private void btnTaoTK_Click(object sender, RoutedEventArgs e)
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    try
-                    {
-                        command.ExecuteNonQuery();
+
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("SELECT HAS_PERMS_BY_NAME('proc_TaoTaiKhoan', 'OBJECT', 'EXECUTE')", connection))
+                                {
+                                        try
+                                        {
+
+                                                int result = int.Parse(command.ExecuteScalar().ToString());
+                                                if (result == 1)
+                                                {
+                                                        TaoTaiKhoan taoTaiKhoan = new TaoTaiKhoan();
+                                                        taoTaiKhoan.Show();
+                                                }
+                                                else
+                                                {
+                                                        MessageBox.Show("That Bai: Khong Co Quyen");
+                                                }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                                MessageBox.Show("That Bai: " + ex.Message);
+                                        }
+                                }
+                        }
+                }
+
+                private void btnQuanLyKho_Click(object sender, RoutedEventArgs e)
+                {
                         ChonKhoWindow chonKho = new ChonKhoWindow();
                         chonKho.Show();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("That Bai: " + ex.Message);
-                    }
                 }
-            }
-        }
 
-        private void btnQuanLySanPham_Click(object sender, RoutedEventArgs e)
-        {
-            using (SqlConnection connection = DBConnection.connect())
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("proc_LayHetSanPham", connection))
+                private void btnQuanLySanPham_Click(object sender, RoutedEventArgs e)
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                        QuanLySanPham quanLySanPham = new QuanLySanPham();
-                        quanLySanPham.Show();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("That Bai: " + ex.Message);
-                    }
+                        using (SqlConnection connection = DBConnection.connect())
+                        {
+                                connection.Open();
+                                using (SqlCommand command = new SqlCommand("SELECT HAS_PERMS_BY_NAME('proc_SuaSanPham', 'OBJECT', 'EXECUTE')", connection))
+                                {
+                                        try
+                                        {
+
+                                                int result = int.Parse(command.ExecuteScalar().ToString());
+                                                if (result == 1)
+                                                {
+                                                        QuanLySanPham quanLySanPham = new QuanLySanPham();
+                                                        quanLySanPham.Show();
+                                                }
+                                                else
+                                                {
+                                                        MessageBox.Show("That Bai: Khong Co Quyen");
+                                                }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                                MessageBox.Show("That Bai: " + ex.Message);
+                                        }
+                                }
+                        }
                 }
-            }
-        }
 
-        private void btnQuanLyCuaHang_Click(object sender, RoutedEventArgs e)
-        {
-            using (SqlConnection connection = DBConnection.connect())
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("proc_LayHetCuaHang", connection))
+                private void btnQuanLyCuaHang_Click(object sender, RoutedEventArgs e)
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    try
-                    {
-                        command.ExecuteNonQuery();
                         ChonCuaHang chonCuaHang = new ChonCuaHang();
                         chonCuaHang.Show();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("That Bai: " + ex.Message);
-                    }
                 }
-            }
-        }
 
                 private void btnDangXuat_Click(object sender, RoutedEventArgs e)
                 {
@@ -130,5 +113,5 @@ namespace WpfApp1.Admin
                                 MessageBox.Show("Thử Lại: " + ex.Message);
                         }
                 }
-    }
+        }
 }

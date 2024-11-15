@@ -40,10 +40,15 @@ namespace WpfApp1.SanPham
 
                 private void btnXacNhan_Click(object sender, RoutedEventArgs e)
                 {
-                        string tenSP = txbTenSP.Text;
-                        string dongia = txbDonGia.Text;
+                        string tenSP = txbTenSP.Text.ToString();
+                        string dongia = txbDonGia.Text.ToString();
                         string mota = txbMoTa.Text;
                         string maloaiSP = (cbbLoaiSP.SelectedItem as ComboBoxItem).Tag.ToString();
+                        if(dongia.Length <= 0 || CheckNotNull(dongia) == false || CheckIfOnlyNumbers(dongia) == false ) 
+                        {
+                                MessageBox.Show("Đơn giá chỉ có thể nhập số!");
+                                return;
+                        }
 
                         bool successful = false;
                         using (SqlConnection connection = DBConnection.connect())
@@ -152,6 +157,25 @@ namespace WpfApp1.SanPham
                                         break; 
                                 }
                         }
+                }
+                static bool CheckNotNull(string str)
+                {
+                        if (string.IsNullOrEmpty(str))
+                        {
+                                return false;
+                        }
+                        return true;
+                }
+                static bool CheckIfOnlyNumbers(string str)
+                {
+                        foreach (char c in str)
+                        {
+                                if (!char.IsDigit(c))
+                                {
+                                        return false;
+                                }
+                        }
+                        return true;
                 }
         }
 

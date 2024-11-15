@@ -286,7 +286,6 @@ BEGIN
     END CATCH
 END
 
-
 --Kho--
 DROP PROCEDURE proc_LayHetKho
 DROP PROCEDURE proc_NhapSPVaoCH

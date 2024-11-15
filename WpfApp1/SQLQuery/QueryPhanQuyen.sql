@@ -37,15 +37,11 @@ GO
 GRANT INSERT, DELETE, UPDATE ON SPThuocCH TO NhanVien
 GO
 GRANT EXECUTE TO NhanVien
-DENY EXECUTE ON proc_LayHetSanPham to NhanVien
 DENY EXECUTE ON proc_ThemSanPham to NhanVien
 DENY EXECUTE ON proc_XoaSanPham to NhanVien
 DENY EXECUTE ON proc_SuaSanPham to NhanVien
-DENY EXECUTE ON proc_LaySanPham to NhanVien
-DENY EXECUTE ON func_LayTenLoaiSP to NhanVien
 DENY EXECUTE ON proc_ThemLoaiSP to NhanVien
 DENY EXECUTE ON proc_SuaLoaiSanPham to NhanVien
-DENY EXECUTE ON proc_LayHetLoaiSP to NhanVien
 
 DENY EXECUTE ON proc_LayHetTaiKhoan to NhanVien
 DENY EXECUTE ON proc_TaoTaiKhoan to NhanVien
@@ -80,9 +76,11 @@ select 'drop login [' + name + '];'
 from sys.server_principals
 GO
 
+
 select 'drop user [' + name + '];'
 from sys.sysusers
 GO
+
 
 select * from sys.sysusers 
 
